@@ -1,0 +1,3 @@
+*.css
+!assets/s/cssreset-min.css
+.idea/

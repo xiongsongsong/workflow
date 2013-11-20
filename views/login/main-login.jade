@@ -1,0 +1,18 @@
+extends /layout
+block css
+    link(rel="stylesheet",href="/s/login/main-login.css")
+block js
+    script.
+        seajs.use('s/login/main-login')
+block content
+    form#login(action="/login/checkLogin",method="post",autocomplete="off")
+        input(type="hidden",name="_csrf",value="#{token}")
+        .user-name
+            label 用户名
+            input(type="text",name="_")
+        .password
+            label 密码
+            input(type="password",name="__")
+        .control
+            input(type="reset",value="清除").btn.transparent
+            input(type="submit",value="确认").btn.confirm
