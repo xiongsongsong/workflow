@@ -6,7 +6,11 @@ var app = require('app')
 var helper = require('helper')
 
 app.get('/', helper.csrf, function (req, res) {
-    res.render('login/main-login', { title: 'Express' });
+    if (!helper.isLogin(req)) {
+        res.render('login/main-login', { title: '流程平台登陆' });
+    } else {
+        res.render('administrator/index')
+    }
 });
 
 require('./login')

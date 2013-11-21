@@ -25,19 +25,22 @@ db.open(function () {
     app.use(express.urlencoded());
     app.use(express.methodOverride());
     app.use(express.cookieParser('work-flow'));
-    app.use(express.session());
-    app.use(express.csrf());
     app.use(require('stylus').middleware(path.join(__dirname, 'assets')));
     app.use(express.static(path.join(__dirname, 'assets')));
 
     //session store
+    console.log('session-store')
     var MongoSessionStore = require('connect-mongo')(express);
     app.use(express.session({
-        secret: 'work-flow',
+        secret: 'ued-workflow',
         store: new MongoSessionStore({
-            db: 'workflow-sessions'
+            db: 'workflow-session'
         })
     }));
+
+    app.use(express.csrf());
+
+    app.use(express.errorHandler());
 
     // development only
     if ('development' == app.get('env')) {
@@ -50,7 +53,6 @@ db.open(function () {
         global.assetsCDN = 'http://localhost'
         global.imgCDN = 'http://localhost'
         global.hostDOMAIN = 'http://localhost'
-        exports.abc = 123
     }
 
     http.createServer(app).listen(app.get('port'), function () {

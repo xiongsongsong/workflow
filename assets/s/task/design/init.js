@@ -8,16 +8,6 @@
 
 define(function (require, exports, module) {
 
-    require('./upload');
-
-    require('./show-task-list');
-
-    require('./show-task-of-process');
-
-    require('./add-task-of-design-process');
-
-    require('./add-task');
-
     require('./add-multiple-task');
 
 });
