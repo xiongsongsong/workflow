@@ -1,0 +1,23 @@
+extends /layout
+block css
+    link(rel='stylesheet',href="/s/administrator/index.css")
+block js
+    script.
+        seajs.use('s/administrator/init')
+block content
+    #sidebar
+        include /sidebar-avatar-menu
+        ul.menu
+            li
+                a(href="/publish-task-list") 发放需求
+            li
+                a(href="/task-list-history") 以往需求列表
+            li
+                a(href="search-task") 搜索需求
+    #main-container-wrapper
+        #main-container-container
+            #main-container-content
+                h2 发布需求
+                #publish-task-list-form.J-add-multiple-task
+                        br
+                        | 载入中...

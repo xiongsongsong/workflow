@@ -11,7 +11,7 @@ define(function (require, exports, module) {
 
     var tpl = require('./add-multiple-task.tpl');
 
-    var template = require('template/template/1.0.0/template-debug');
+    var template = require('template');
 
     //存放第一步的Excel的数据
     var textareaValue = '';
@@ -64,16 +64,15 @@ define(function (require, exports, module) {
     });
 
     //添加多个任务单的触点
-    $(document).on('click', '.J-add-multiple-task-of-design-trigger', function () {
         show();
         if (exports.dialog) {
             exports.dialog.set('bodyContent', template(tpl, {step: 1}))
             exports.dialog.center();
         }
-    });
 
     //添加多个任务时，每一步的触点
     $(document).on('click', '.J-add-multiple-task', function (ev) {
+
             var $target = $(ev.currentTarget);
             var form = ev.target.form;
 

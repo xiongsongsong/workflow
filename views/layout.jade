@@ -3,7 +3,7 @@ html
     head
         meta(charset="utf-8")
         meta(http-equiv="X-UA-Compatible",content="IE=edge")
-        title 流程平台
+        title=title
         link(rel='stylesheet', href='#{assetsCDN}/s/cssreset-min.css')
         link(rel="stylesheet",href="#{assetsCDN}/s/global.css")
         | <!--[if lte IE 7]><script src="#{assetsCDN}/s/fonts/lte-ie7.js"></script><![endif]-->
@@ -16,6 +16,7 @@ html
             if(!window.console)window.console=function(){}
         script(src="http://g.tbcdn.cn/kissy/k/1.4.0/seed-min.js")
         script(id="seajsnode",src="#{assetsCDN}/s/sea.js")
+        script(id="seajsnode",src="#{assetsCDN}/s/sea-modules/seajs/seajs-text/1.0.3/seajs-text.js")
         script.
             KISSY.config({
                 modules: {
@@ -41,7 +42,7 @@ html
                 alias: {
                     "$": 's/jquery/jquery',
                     'sha3':'s/global/crypto/sha3',
-                    template: 'sea/xiongsongsong/template/1.1.0/template'
+                    template: 'sea/xiongsongsong/template/1.1.1/template'
                 },
                 preload: ['$']
                 });

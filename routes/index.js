@@ -9,7 +9,6 @@ app.get('/', helper.csrf, function (req, res) {
     if (!helper.isLogin(req)) {
         res.render('login/main-login', { title: '流程平台登陆' });
     } else {
-        console.log(req.session)
         res.render('administrator/index', {sid: req.session._id, user_name: req.session.user})
     }
 });
