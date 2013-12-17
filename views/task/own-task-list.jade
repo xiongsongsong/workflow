@@ -20,14 +20,18 @@ block content
                                     th(width="40%")
                                         .wrapper 需求名称
                                     th(width="10%")
+                                        .wrapper 提交者
+                                    th(width="10%")
                                         .wrapper 需求方
-                                    th(width="50%")
+                                    th(width="40%")
                                         .wrapper 最新状况
                                 - docs.forEach(function(item){
                                     tr
                                         td
                                             .wrapper
                                                 a.link(href='/task/detail/#{item._id}') #{item.task['需求名称']}
+                                        td
+                                            .wrapper=item.task['from_user']
                                         td
                                             .wrapper=item.task['需求方']
                                         td
