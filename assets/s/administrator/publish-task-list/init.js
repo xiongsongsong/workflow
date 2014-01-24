@@ -7,21 +7,71 @@ define(function (require, exports, module) {
     var template = require('template')
     var $content = $('#publish-task-list-form')
 
+    var step2HTML = ''
+
     var path = {
         //填充excel数据
         'fill-excel-data': {
             data: undefined,
             callback: function (ev) {
-                path['filter-excel-data'].callback()
+                //如果已经存在这个属性了，说明是点了上一步
+                if (path['fill-excel-data'].data) {
+                    $content.html(template.render(require('./fill-excel-data.tpl'), {}))
+                    $('#excel-data').val(path['fill-excel-data'].data)
+                    delete path['fill-excel-data'].data
+                    delete path['filter-excel-data'].data
+                } else {
+                    path['filter-excel-data'].callback()
+                }
             }
         },
         //分析并显示excel数据
         'filter-excel-data': {
             data: undefined,
             callback: function () {
-                var data = transExcelData($('#excel-data').val())
-                var tpl = require('./filter-excel-data.tpl')
-                $content.html(template.render(tpl, { data: data}))
+                if (path['filter-excel-data'].data) {
+                    $content.html(path['filter-excel-data'].html)
+                } else {
+                    path['fill-excel-data'].data = $('#excel-data').val()
+                    path['filter-excel-data'].data = transExcelData($('#excel-data').val())
+                    var tpl = require('./filter-excel-data.tpl')
+                    $content.html(template.render(tpl, { data: path['filter-excel-data'].data }))
+                }
+            }
+        },
+        //第三步
+        previewExcelData: {
+            data: undefined,
+            callback: function () {
+                path['filter-excel-data'].html = $content.html()
+                var $alreadyTh = $('th.J-menu.already');
+                if ($alreadyTh.length === fieldsArray.length) {
+                    var cell = (function () {
+                        var arr = {};
+                        $alreadyTh.each(function (index, item) {
+                            var $item = $(item);
+                            arr[$item.find('div.fields-name').text()] = $(item).data('cell');
+                        });
+                        return arr;
+                    })();
+
+                    var postExcelData = new Array(path['filter-excel-data'].data.length);
+                    path['filter-excel-data'].data.forEach(function (item, i) {
+                        fieldsArray.forEach(function (fields, j) {
+                            if (!postExcelData[i]) {
+                                postExcelData[i] = [];
+                            }
+                            postExcelData[i].push(path['filter-excel-data'].data[i][cell[fields]]);
+                        })
+                    });
+                    step2HTML = $content.html()
+                    $content.html(template.render(
+                        require('./previewExcelData.tpl'),
+                        {step: 3, data: postExcelData, cell: cell, fieldsArray: fieldsArray}
+                    ))
+                } else {
+                    alert('请先选择好所有的字段')
+                }
             }
         }
     }
@@ -76,4 +126,53 @@ define(function (require, exports, module) {
 
         return data;
     }
+
+
+    var fieldsArray = ['设计师', '任务名', '需求方', '任务时长', '任务类型'];
+
+    //让组长或主管可以选择该字段所对应的所有任务单
+    $(document).on('mouseenter mouseleave', 'th.J-menu', function (ev) {
+        var $target = $(ev.currentTarget);
+        if (ev.type === 'mouseenter') {
+            $(this).find('div.wrapper').append($('<div class="menu"><div class="cancel">取消</div>' + (function () {
+
+                var th = $target.siblings('th').add($target);
+
+                var html = '';
+                var leftArray = [];
+                th.each(function (index, item) {
+                    var fieldsName = $(item).find('div.fields-name');
+                    if (fieldsName.text() !== '选择字段') {
+                        if (fieldsArray.indexOf($.trim(fieldsName.text())) > -1) leftArray.push(fieldsName.text())
+                    }
+                });
+                for (var i = 0; i < fieldsArray.length; i++) {
+                    if (leftArray.indexOf(fieldsArray[i]) > -1) continue;
+                    html += '<div>' + fieldsArray[i] + '</div>'
+                }
+                return html;
+
+            })() + '</div>'))
+        } else {
+            $(this).find('div.menu').remove();
+        }
+    });
+
+    //填充选择的菜单到字段中
+    $(document).on('click', 'th.J-menu .menu div', function (ev) {
+
+        var $this = $(this);
+        var $th = $(this).parents('th');
+
+        if (!$this.hasClass('cancel')) {
+            $th.find('div.fields-name').html($this.html());
+            $th.addClass('already');
+        } else {
+            $th.find('div.fields-name').html('请选择');
+            $th.removeClass('already');
+        }
+        $th.find('div.menu').remove();
+
+    });
+
 })

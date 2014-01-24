@@ -34,36 +34,7 @@
     <input type="button" name="step" class="btn btn-default J-add-multiple-task J-go-back" value="&lt;&lt; 重新粘贴数据" data-step="1">
     <input type="button" name="step" class="btn btn-primary J-add-multiple-task J-preview" value="预览数据 &gt;&gt;" data-step="3">
     #elseif(step==3)
-    <div class="content" style="height: 400px;overflow: auto;">
-        <div>
-            <label><input type="radio" name="company" checked="checked" value="阿里巴巴">阿里巴巴</label>
-            <label><input type="radio" name="company" value="京东">京东</label>
-            <label><input type="radio" name="company" value="腾讯">腾讯</label>
-            <label><input type="radio" name="company" value="其他">其他</label>
-        </div>
-        <table>
-            <tr>
-                #each(name in fieldsArray)
-                <th>
-                    <div class="wrapper">
-                        <div class="fields-name">#{name}</div>
-                    </div>
-                </th>
-                #end
-            </tr>
-            #each(row in data)
-            <tr>
-                #each(_row in row)
-                <td>
-                    <div class="wrapper">#{_row}</div>
-                </td>
-                #end
-            </tr>
-            #end
-        </table>
-    </div>
-    <input type="button" name="step" class="btn btn-default J-add-multiple-task J-go-back" value="&lt;&lt;返回上一步" data-step="2">
-    <input type="button" name="step" class="btn btn-primary J-add-multiple-task J-save" value="保存任务并通知设计师 &gt;&gt;" data-step="4">
+
     #elseif(step==4)
     <p>已经提交任务单：以下是服务器返回的详情：</p>
         #if(serverInfo.status<1)
