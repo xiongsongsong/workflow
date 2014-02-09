@@ -112,7 +112,7 @@ app.post('/task/add-task', function (req, res) {
             return;
         }
 
-        if (!data.group || data.group.indexOf('添加设计需求') < 0) {
+        if (!data.group || data.group.indexOf('添加计件需求') < 0) {
             serverInfo.status = -2;
             serverInfo.err.push('未授权访问');
             res.json(serverInfo);
