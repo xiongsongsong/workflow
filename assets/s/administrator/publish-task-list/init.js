@@ -40,38 +40,22 @@ define(function (require, exports, module) {
             }
         },
         //第三步
-        previewExcelData: {
+        publishTask: {
             data: undefined,
             callback: function () {
                 path['filter-excel-data'].html = $content.html()
-                var $alreadyTh = $('th.J-menu.already');
-                if ($alreadyTh.length === fieldsArray.length) {
-                    var cell = (function () {
-                        var arr = {};
-                        $alreadyTh.each(function (index, item) {
-                            var $item = $(item);
-                            arr[$item.find('div.fields-name').text()] = $(item).data('cell');
-                        });
-                        return arr;
-                    })();
-
-                    var postExcelData = new Array(path['filter-excel-data'].data.length);
-                    path['filter-excel-data'].data.forEach(function (item, i) {
-                        fieldsArray.forEach(function (fields, j) {
-                            if (!postExcelData[i]) {
-                                postExcelData[i] = [];
-                            }
-                            postExcelData[i].push(path['filter-excel-data'].data[i][cell[fields]]);
-                        })
+                var $alreadyTh = $('th.J-fields');
+                var cell = (function () {
+                    var arr = [];
+                    $alreadyTh.each(function (index, item) {
+                        arr.push($(item).find('div.fields-name').text());
                     });
-                    step2HTML = $content.html()
-                    $content.html(template.render(
-                        require('./previewExcelData.tpl'),
-                        {step: 3, data: postExcelData, cell: cell, fieldsArray: fieldsArray}
-                    ))
-                } else {
-                    alert('请先选择好所有的字段')
-                }
+                    return arr;
+                })();
+                step2HTML = $content.html()
+
+                //发送数据给后端
+
             }
         }
     }
@@ -127,52 +111,7 @@ define(function (require, exports, module) {
         return data;
     }
 
-
-    var fieldsArray = ['设计师', '任务名', '需求方', '任务时长', '任务类型'];
-
-    //让组长或主管可以选择该字段所对应的所有任务单
-    $(document).on('mouseenter mouseleave', 'th.J-menu', function (ev) {
-        var $target = $(ev.currentTarget);
-        if (ev.type === 'mouseenter') {
-            $(this).find('div.wrapper').append($('<div class="menu"><div class="cancel">取消</div>' + (function () {
-
-                var th = $target.siblings('th').add($target);
-
-                var html = '';
-                var leftArray = [];
-                th.each(function (index, item) {
-                    var fieldsName = $(item).find('div.fields-name');
-                    if (fieldsName.text() !== '选择字段') {
-                        if (fieldsArray.indexOf($.trim(fieldsName.text())) > -1) leftArray.push(fieldsName.text())
-                    }
-                });
-                for (var i = 0; i < fieldsArray.length; i++) {
-                    if (leftArray.indexOf(fieldsArray[i]) > -1) continue;
-                    html += '<div>' + fieldsArray[i] + '</div>'
-                }
-                return html;
-
-            })() + '</div>'))
-        } else {
-            $(this).find('div.menu').remove();
-        }
-    });
-
-    //填充选择的菜单到字段中
-    $(document).on('click', 'th.J-menu .menu div', function (ev) {
-
-        var $this = $(this);
-        var $th = $(this).parents('th');
-
-        if (!$this.hasClass('cancel')) {
-            $th.find('div.fields-name').html($this.html());
-            $th.addClass('already');
-        } else {
-            $th.find('div.fields-name').html('请选择');
-            $th.removeClass('already');
-        }
-        $th.find('div.menu').remove();
-
-    });
+    //必须要的列
+    var fieldsArray = ['需求名称', '任务类型', '任务时长', '需求方', '需求方电话', '接口人', '备注'];
 
 })

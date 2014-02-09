@@ -10,7 +10,7 @@
         <table>
             <tr>
                 #each(row,i in data[0])
-                <th class="J-menu" data-cell="#{i}">
+                <th class="J-fields" data-cell="#{i}">
                     <div class="wrapper">
                         <div class="fields-name">请选择</div>
                     </div>

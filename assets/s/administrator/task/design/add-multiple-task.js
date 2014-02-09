@@ -91,7 +91,7 @@ define(function (require, exports, module) {
             //进入第三步
             if ($target.attr('data-step') === '3' && $target.hasClass('J-preview')) {
                 //基础判断，判断字段是否已经全部选中
-                var $alreadyTh = $('th.J-menu.already');
+                var $alreadyTh = $('th.J-fields.already');
                 if ($alreadyTh.length === fieldsArray.length) {
                     var cell = (function () {
                         var arr = {};
@@ -200,7 +200,7 @@ define(function (require, exports, module) {
 
 
     //让组长或主管可以选择该字段所对应的所有任务单
-    $(document).on('mouseenter mouseleave', 'th.J-menu', function (ev) {
+    $(document).on('mouseenter mouseleave', 'th.J-fields', function (ev) {
         var $target = $(ev.currentTarget);
         if (ev.type === 'mouseenter') {
             $(this).find('div.wrapper').append($('<div class="menu"><div class="cancel">取消</div>' + (function () {
@@ -227,7 +227,7 @@ define(function (require, exports, module) {
         }
     });
 
-    $(document).on('click', 'th.J-menu .menu div', function (ev) {
+    $(document).on('click', 'th.J-fields .menu div', function (ev) {
 
         var $this = $(this);
         var $th = $(this).parents('th');

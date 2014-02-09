@@ -16,10 +16,10 @@
 #fill-excel-data .control
   text-align right
 
-.J-menu .wrapper
+.J-fields .wrapper
   position relative
 
-.J-menu .wrapper .menu
+.J-fields .wrapper .menu
   position absolute
   margin-left - 50px
   filter quote("progid:DXImageTransform.Microsoft.gradient(enabled='true',startColorstr='#CCFFFFFF', endColorstr='#CCFFFFFF')")
@@ -35,14 +35,22 @@
   top 20px
   border-radius 2px
 
-.J-menu .wrapper div.cancel
+table.task-list tr td
+  background url(/s/administrator/publish-task-list/solid-bg.png) right center repeat-y;
+
+table.task-list td div.wrapper
+  padding 0 6px
+
+.J-fields .wrapper div.cancel
   background link-hover-color
   color #fff
   border-radius 3px
 
-.select-field tr th.J-menu
+.select-field tr th.J-fields
   padding 10px 0
   font-size 14px
+  font-weight bold
+  text-align left
 
-.select-field tr th.J-menu:hover
-  background #999
+.select-field tr th.J-fields div.fields-name
+  padding 0 6px
