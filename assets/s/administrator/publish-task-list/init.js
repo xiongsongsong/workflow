@@ -78,7 +78,9 @@ define(function (require, exports, module) {
                         json: JSON.stringify(arr)
                     }
                 }).done(function (data) {
-
+                        if (data.success) {
+                            window.location.href = '/task/own-task-list'
+                        }
                     })
                     .error(function () {
 

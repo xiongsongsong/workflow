@@ -45,6 +45,7 @@ app.post(/\/task\/modify\/([a-z0-9]{24})/, function (req, res) {
         }
 
         var $set = {}
+        var $push = {}
         if (req.body.key === '设计师') {
             //检测是否有权限
             $set['task.设计师'] = xss(req.body.plain_value)
@@ -53,13 +54,29 @@ app.post(/\/task\/modify\/([a-z0-9]{24})/, function (req, res) {
             } else {
                 $set['task.设计师id'] = req.body.value
             }
+            $push.history = {
+                name: xss(req.body.key),
+                modify_value: xss(xss(req.body.plain_value)),
+                ts: Date.now()
+            }
         } else {
             $set['task.' + req.body.key] = xss(req.body.value)
+            $push.history = {
+                name: xss(req.body.key),
+                modify_value: xss(xss(req.body.value)),
+                ts: Date.now()
+            }
         }
 
 
+        if (server.err.length > 0) {
+            server.status = -4
+            res.json(server)
+            return
+        }
+
         var task = new db.Collection(db.Client, 'task')
-        task.update({_id: taskId}, {$set: $set}, {w: 1}, function (err, row) {
+        task.update({_id: taskId}, {$set: $set, $push: $push}, {w: 1}, function (err, row) {
             if (err) {
                 server.err.push('更新失败')
                 server.status = -10
