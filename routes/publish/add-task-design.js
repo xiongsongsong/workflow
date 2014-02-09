@@ -82,6 +82,9 @@ app.post('/task/add-task', function (req, res) {
             }
         })
 
+        //只有“指派计件任务设计师”组，有权限更改此字段
+        delete item['设计师']
+
         TASK.push({
             task: item,
             ts: Date.now(),
