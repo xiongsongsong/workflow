@@ -55,6 +55,11 @@ db.open(function () {
         global.hostDOMAIN = 'http://localhost'
     }
 
+    app.use(function (req, res, next) {
+        res.locals.req = req;
+        next();
+    });
+
     http.createServer(app).listen(app.get('port'), function () {
         console.log('Express server listening on port ' + app.get('port'));
     });

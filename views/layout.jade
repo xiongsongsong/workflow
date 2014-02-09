@@ -50,7 +50,7 @@ html
             seajs.use('$',function($){
                 console.log($)
             })
-            var _csrf_token_="#{token}"
+            var _csrf_token_="#{req.csrfToken()}"
     body
         block content
         block js
