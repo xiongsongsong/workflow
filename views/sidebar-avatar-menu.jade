@@ -1,4 +1,4 @@
 block sidebar-avatar
     .avatar
-        img(src="/avatar/#{sid}_80x80")
-        h1=user_name
+        img(src="/avatar/#{req.session._id}_80x80")
+        h1 #{req.session.user}

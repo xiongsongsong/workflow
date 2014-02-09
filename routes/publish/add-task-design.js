@@ -73,12 +73,13 @@ app.post('/task/add-task', function (req, res) {
                     serverInfo.taskError.push(JSON.stringify(item) + '出错了')
                     return
                 }
+            } else {
+                //防止xss
+                var _value = xss(item[key])
+                var _key = xss(key)
+                delete item[key]
+                item[_key] = _value
             }
-            //防止xss
-            var _value = xss(item[key])
-            var _key = xss(key)
-            delete item[key]
-            item[_key] = _value
         })
 
         TASK.push({
@@ -115,8 +116,8 @@ app.post('/task/add-task', function (req, res) {
             return;
         }
 
-        var task_of_design = new db.Collection(db.Client, 'task-of-design');
-        task_of_design.insert(TASK, {safe: true},
+        var task = new db.Collection(db.Client, 'task');
+        task.insert(TASK, {safe: true},
             function (err, row) {
                 if (err) {
                     serverInfo.status = -10;

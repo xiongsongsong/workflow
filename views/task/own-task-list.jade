@@ -1,0 +1,33 @@
+extends /layout
+block css
+    link(rel='stylesheet',href="/s/task/own-task-list.css")
+block js
+    script.
+        seajs.use('s/task/own-task-list')
+block content
+    #sidebar
+        include /sidebar-avatar-menu
+        ul.menu
+            li
+                a(href="/task/add-task") 发放需求
+            li
+                a.current(href="/task/own-task-list") 我添加的需求
+            li
+                a(href="search-task") 搜索需求
+    #main-container-wrapper
+        #main-container-container
+            #main-container-content
+                h2 我添加的需求
+                .table-wrapper
+                    .table-content
+                        table.task-list.task-list-normal
+                            tr
+                                th 需求名称
+                                th 需求方
+                                th 任务时长
+                            - docs.forEach(function(item){
+                              tr
+                                    td=item.task['需求名称']
+                                    td=item.task['需求方']
+                                    td=item.task['任务时长']
+                            - })

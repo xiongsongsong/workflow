@@ -6,7 +6,7 @@ var app = require('app')
 
 app.get('/publish-task-list', function (req, res) {
 
-    res.render('publish-task-list/index', {title: '发布新任务单', sid: req.session._id, user_name: req.session.user})
+    res.render('publish-task-list/index', {title: '发布新任务单'})
 
 })
 
