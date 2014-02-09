@@ -56,7 +56,10 @@ app.post(/\/task\/modify\/([a-z0-9]{24})/, function (req, res) {
             }
             $push.history = {
                 name: xss(req.body.key),
-                modify_value: xss(xss(req.body.plain_value)),
+                //value和plain_value的区别，value是用来做查询的关键字段，而plain_value是方便人查看的明文的文本
+                //例如 value用来展示用户的id，而plain_value用来保存用户的姓名
+                modify_value: xss(xss(req.body.value)),
+                modify_plain_value: xss(xss(req.body.plain_value)),
                 ts: Date.now()
             }
         } else {

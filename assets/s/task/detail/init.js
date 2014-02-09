@@ -12,12 +12,14 @@ define(function () {
         var $document = $(document)
 
         $document.on('click', '.J-select-user-trigger', function (ev) {
+            ev.preventDefault()
             var $this = $(ev.currentTarget)
             $this.addClass('checked').siblings().removeClass('checked')
         })
 
         //确认设计师选择
         $document.on('click', '.J-confirm-user', function (ev) {
+            ev.preventDefault()
             var target = $document.find('.J-select-user .checked')
             var id = target.data('id')
             var value = target.data('id')
