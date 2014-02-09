@@ -3,6 +3,7 @@ block css
     link(rel='stylesheet',href="/s/task/detail.css")
 block js
     script.
+        var taskId='#{_id}'
         seajs.use('s/task/detail/init')
 block content
     #sidebar
@@ -41,5 +42,5 @@ block content
                 .push
                     h2 该任务分配给
                     .btn-area.J-select-user
-                    a.btn.btn-confirm 确认选择
+                    a.btn.btn-confirm.J-confirm-user 确认选择
 

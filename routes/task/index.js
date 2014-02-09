@@ -19,3 +19,6 @@ app.get('/offsite', function (req, res) {
 app.get('/task/add-task', function (req, res) {
     res.render('task/publish-task-list', {title: '发布需求'})
 })
+
+//修改任务单
+require('./modify-task')
