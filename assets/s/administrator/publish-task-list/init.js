@@ -80,6 +80,8 @@ define(function (require, exports, module) {
                 }).done(function (data) {
                         if (data.success) {
                             window.location.href = '/task/own-task-list'
+                        } else {
+                            alert('遇到错误，请严格按照模板规则来保存数据')
                         }
                     })
                     .error(function () {
