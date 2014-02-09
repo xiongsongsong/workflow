@@ -43,6 +43,10 @@ define(function (require, exports, module) {
         publishTask: {
             data: undefined,
             callback: function () {
+
+                if (!confirm('确认发布需求？')) {
+                    return
+                }
                 path['filter-excel-data'].html = $content.html()
                 var $alreadyTh = $('th.J-fields');
                 var cell = (function () {
@@ -134,8 +138,5 @@ define(function (require, exports, module) {
 
         return data;
     }
-
-    //必要的列
-    var requireFields = ['需求名称', '任务类型', '任务时长', '需求方'];
 
 })

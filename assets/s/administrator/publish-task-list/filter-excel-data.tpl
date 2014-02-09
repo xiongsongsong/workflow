@@ -26,4 +26,4 @@
     #if(sumLength>12)<p>多余的 #{sumLength-12} 条未显示</p>#end
 </div>
 <input type="button" name="step" class="btn" value="&lt;&lt; 重新粘贴数据" data-go="fill-excel-data">
-<input type="button" name="step" class="btn btn-confirm" value="发布需求 &gt;&gt;" data-go="publishTask">
+<input type="button" name="step" class="btn btn-confirm" value="发布" data-go="publishTask">
