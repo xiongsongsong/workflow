@@ -47,9 +47,6 @@ html
                 preload: ['$']
                 });
             //seajs.use('s/login/main-login')
-            seajs.use('$',function($){
-                console.log($)
-            })
             var _csrf_token_="#{req.csrfToken()}"
     body
         block content

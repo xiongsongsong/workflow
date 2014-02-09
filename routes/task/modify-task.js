@@ -59,12 +59,16 @@ app.post(/\/task\/modify\/([a-z0-9]{24})/, function (req, res) {
 
 
         var task = new db.Collection(db.Client, 'task')
-        task.update({_id: taskId}, {$set: $set}, {w: 1}, function (err, result) {
-
-            console.log(taskId, err, result)
-
+        task.update({_id: taskId}, {$set: $set}, {w: 1}, function (err, row) {
+            if (err) {
+                server.err.push('更新失败')
+                server.status = -10
+            } else {
+                server.row = row
+                server.status = 1
+            }
+            res.json(server)
         })
-
     })
 
 })

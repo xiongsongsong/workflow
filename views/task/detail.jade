@@ -39,8 +39,9 @@ block content
                         - var date=new Date(ts)
                         ul.record
                             li #{date.getFullYear()}.#{date.getMonth()+1}.#{date.getDate()} 完成需求提交
-                .push
-                    h2 该任务分配给
-                    .btn-area.J-select-user
-                    a.btn.btn-confirm.J-confirm-user 确认选择
+                -if(task['设计师']===undefined)
+                    .J-push.push
+                        h2 该任务分配给
+                        .btn-area.J-select-user
+                        a.btn.btn-confirm.J-confirm-user 确认选择
 
