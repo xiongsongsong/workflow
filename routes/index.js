@@ -23,3 +23,6 @@ require('./task')
 
 //读取头像
 require('./avatar')
+
+//查询当前onsite设计师等等
+require('./user')

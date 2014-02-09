@@ -3,7 +3,11 @@
  */
 
 var app = require('app')
+var db = require('db')
 
 app.get(/\/task\/detail\/([a-z0-9]{24})/, function (req, res) {
-    res.end(req.params[0])
+    var task = new db.Collection(db.Client, 'task')
+    task.findOne({_id: db.mongodb.ObjectID(req.params[0]) }, {}, function (err, data) {
+        res.render('task/detail', data)
+    })
 })

@@ -1,0 +1,45 @@
+extends /layout
+block css
+    link(rel='stylesheet',href="/s/task/detail.css")
+block js
+    script.
+        seajs.use('s/task/detail/init')
+block content
+    #sidebar
+        include /sidebar-avatar-menu
+        ul.menu
+            li
+                a(href="/task/add-task") 发放需求
+            li
+                a(href="/task/own-task-list") 我添加的需求
+            li
+                a(href="search-task") 搜索需求
+    #main-container-wrapper
+        #main-container-container
+            #main-container-content
+                h2 名称：
+                    =task['需求名称']
+                ul.task-info
+                    li(style='margin-bottom:12px;') 需求方：#{task['需求方']}
+                    -Object.keys(task).forEach(function(key){
+                        -if(key!=='需求名称' && key!=='需求方' && task[key]){
+                            li #{key}： #{task[key]}
+                        -}
+                    -})
+                //.time-part-wrapper
+                    .time-part-content
+                        h3 时间规划
+                        .time-part
+                            .design
+                            .front
+                .task-record-wrapper
+                    .task-record-content
+                        h2 需求记录
+                        - var date=new Date(ts)
+                        ul.record
+                            li #{date.getFullYear()}.#{date.getMonth()+1}.#{date.getDate()} 完成需求提交
+                .push
+                    h2 该任务分配给
+                    .btn-area.J-select-user
+                    a.btn.btn-confirm 确认选择
+
