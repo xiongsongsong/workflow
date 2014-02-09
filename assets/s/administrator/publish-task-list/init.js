@@ -48,13 +48,37 @@ define(function (require, exports, module) {
                 var cell = (function () {
                     var arr = [];
                     $alreadyTh.each(function (index, item) {
-                        arr.push($(item).find('div.fields-name').text());
+                        arr.push($(item).find('div.fields-name').html());
                     });
                     return arr;
                 })();
                 step2HTML = $content.html()
 
-                //发送数据给后端
+                //发送数据给后端，稍微组装下数据给后端
+                var arr = []
+                for (var i = 0; i < path['filter-excel-data'].data.length; i++) {
+                    var obj = path['filter-excel-data'].data[i];
+                    var _row = {}
+                    for (var j = 0; j < cell.length; j++) {
+                        _row[cell[j]] = obj[j]
+                    }
+                    arr.push(_row)
+                }
+
+                $.ajax({
+                    url: '/task/add-task',
+                    dataType: 'json',
+                    type: 'post',
+                    data: {
+                        _csrf: window._csrf_token_,
+                        json: JSON.stringify(arr)
+                    }
+                }).done(function (data) {
+
+                    })
+                    .error(function () {
+
+                    })
 
             }
         }
@@ -111,7 +135,7 @@ define(function (require, exports, module) {
         return data;
     }
 
-    //必须要的列
-    var fieldsArray = ['需求名称', '任务类型', '任务时长', '需求方', '需求方电话', '接口人', '备注'];
+    //必要的列
+    var requireFields = ['需求名称', '任务类型', '任务时长', '需求方'];
 
 })

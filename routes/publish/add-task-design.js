@@ -8,12 +8,13 @@
 
 var app = require('app');
 var db = require('db');
+var xss = require('xss')
 
 function trans(s) {
     return s && s.trim().length > 0 ? s.trim() : '';
 }
 
-app.post('/add-task-design', function (req, res) {
+app.post('/task/add-task', function (req, res) {
 
     //需要登陆
     //需要管理员角色的组权限
@@ -42,51 +43,52 @@ app.post('/add-task-design', function (req, res) {
 
     serverInfo.taskError = [];
     //开始处理任务单的错误
-    json.data.forEach(function (item) {
+    json.forEach(function (item) {
 
-        var task = {
-            //给谁,记录ObjectId
-            to: trans(item[0]),
-            //任务名
-            name: trans(item[1]),
-            //需求方
-            demand_side: trans(item[2]),
-            //小时数
-            timer: trans(item[3]),
-            //任务类型
-            type: trans(item[4]),
-            //派发者，记录ObjectId
-            from: req.session._id,
-            //时间戳
-            time_stamp: Date.now(),
-            company: trans(req.body.company)
-        };
-
-        var arr = [];
-
-        if (task.to.length < 1) arr.push('您必须指定任务的完成者');
-        if (task.name.length < 1) arr.push('任务名称不能为空');
-        if (task.demand_side.length < 1) arr.push('缺少需求方名称');
-        task.timer = parseInt(task.timer, 10);
-        if (isNaN(task.timer) || task.timer <= 0) arr.push('任务时长必须大于0');
-        if (task.type.length < 1) arr.push('缺少任务类型');
-        if (task.company.length < 1) arr.push('缺少业务所对应的公司');
-
-        if (arr.length < 1) {
-            TASK.push(task)
-        } else {
-            serverInfo.taskError.push(item + '存在问题：' + arr.join(','));
+        var keys = Object.keys(item)
+        //最多允许20个列
+        if (Object.keys(item).length > 20) {
+            return
         }
+
+        // 四个必须存在的字段 '需求名称', '任务类型', '任务时长', '需求方'
+        if (keys.indexOf('需求名称') < 0 || keys.indexOf('任务类型') < 0 && keys.indexOf('任务时长') < 0 && keys.indexOf('需求方') < 0) {
+            serverInfo.taskError.push(JSON.stringify(item) + '缺少必要的字段')
+            return
+        }
+
+        keys.forEach(function (key) {
+            if (key === '任务时长') {
+                item[key] = parseInt(item[key], 10)
+                if (isNaN(item[key]) || item[key] < 0 || item[key] > 360) {
+                    serverInfo.taskError.push(JSON.stringify(item) + '出错了')
+                    return
+                }
+            }
+            //防止xss
+            var _value = xss(item[key])
+            var _key = xss(key)
+            delete item[key]
+            item[_key] = _value
+        })
+
+        TASK.push({
+            task: item,
+            ts: Date.now(),
+            from_id: req.session._id,
+            from_user: req.session.user
+        })
+
     });
 
-    //检查数据是否全错了
-    if (serverInfo.taskError.length === json.data) {
+    //检查数据是否错了
+    if (serverInfo.taskError.length > 0) {
         serverInfo.status = -3;
         res.json(serverInfo);
         return;
     }
 
-    var user = new db.Collection(db.Client, 'user');
+    var user = new db.Collection(db.userClient, 'user');
 
     user.findOne({_id: db.mongodb.ObjectID(req.session._id)}, {fields: {group: 1}}, function (err, data) {
 
@@ -97,7 +99,7 @@ app.post('/add-task-design', function (req, res) {
             return;
         }
 
-        if (!data.group || data.group.indexOf('添加设计师任务单') < 0) {
+        if (!data.group || data.group.indexOf('添加设计需求') < 0) {
             serverInfo.status = -2;
             serverInfo.err.push('未授权访问');
             res.json(serverInfo);
@@ -106,10 +108,16 @@ app.post('/add-task-design', function (req, res) {
 
         var task_of_design = new db.Collection(db.Client, 'task-of-design');
         task_of_design.insert(TASK, {safe: true},
-            function () {
+            function (err, row) {
+                if (err) {
+                    serverInfo.status = -10;
+                    serverInfo.msg = '失败';
+                    res.json(serverInfo);
+                    return
+                }
                 serverInfo.status = 1;
                 //返回插入的行数
-                serverInfo.rows = TASK.length;
+                serverInfo.rows = row.length;
                 serverInfo.msg = '保存成功';
                 serverInfo.success = true;
                 res.json(serverInfo);
