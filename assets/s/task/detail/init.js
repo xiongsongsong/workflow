@@ -22,7 +22,10 @@ define(function () {
             ev.preventDefault()
             var target = $document.find('.J-select-user .checked')
             var id = target.data('id')
-            var value = target.data('id')
+            if (!id) {
+                alert('请选择设计师')
+                return
+            }
             $.ajax({
                 type: 'post',
                 url: '/task/modify/' + id,
