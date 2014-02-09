@@ -43,9 +43,18 @@ app.post('/task/add-task', function (req, res) {
 
     serverInfo.taskError = [];
     //开始处理任务单的错误
+
+    if (!Array.isArray(json) || json.length < 1) {
+        serverInfo.status = -5;
+        serverInfo.err.push('数据为空');
+        res.json(serverInfo);
+        return
+    }
+
     json.forEach(function (item) {
 
         var keys = Object.keys(item)
+
         //最多允许20个列
         if (Object.keys(item).length > 20) {
             return
@@ -121,7 +130,6 @@ app.post('/task/add-task', function (req, res) {
                 serverInfo.msg = '保存成功';
                 serverInfo.success = true;
                 res.json(serverInfo);
-                //todo:将错误信息，保留在数据库中
             });
     });
 
