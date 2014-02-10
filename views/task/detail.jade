@@ -47,12 +47,14 @@ block content
                                         | #{date.getHours()}:#{date.getMinutes()}:#{date.getSeconds()}
                                         | #{item.from_user}将#{item.name}设置为#{item.modify_plain_value?item.modify_plain_value:item.modify_value}
                                 -})
-                        form(action="/save/task-ps-file",method='post',enctype="multipart/form-data")
+                        form(action="/save/task-ps-file",method='post',enctype="multipart/form-data",target='task-ps-file-iframe')
                             input(type='hidden',name='_csrf',value='#{token}')
+                            input(type='hidden',name='callBackName',value='taskFileUploadCallBack')
                             p
                                 input(type='file',name="file",value="上传文件")
                             p
                                 input(type='submit',value='提交')
+                        iframe(name='task-ps-file-iframe',width='0',height='0',style='position:absolute;left:-9999em;top:-9999em;')
                 -if(task['设计师']===undefined)
                     .J-push.push
                         h2 该任务分配给

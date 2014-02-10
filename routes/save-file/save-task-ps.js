@@ -155,16 +155,13 @@ function saveFile(req, res) {
         var fileName = file.fileId + '.' + file.format
         var gs = new GridStore(DB.dbServer, fileName, fileName, "w", options)
         gs.writeFile(file.path, function (err) {
-            if (!err) {
-                save90(file)
-            } else {
+            if (err) {
                 uploadInfo.err.push('无法保存' + file.name)
                 unlink(file.path)
             }
             end()
         })
     }
-
 
     //保存图片的原始数据
     function saveOriginImageFile(file, size) {
@@ -295,8 +292,8 @@ function saveFile(req, res) {
             uploadInfo.origin_name = file.name
             uploadInfo.size = file.size
         }
-        res.header('content-type', 'text/text;charset=utf-8')
-        res.end(JSON.stringify(uploadInfo))
+        uploadInfo.callBackName = req.body.callBackName
+        res.render('save-file/callback', {callBackName: req.body.callBackName, uploadInfo: uploadInfo})
     }
 
 }

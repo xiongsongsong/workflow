@@ -11,10 +11,6 @@ var db = require('db');
 var xss = require('xss')
 var taskValidator = require('./../task-validator')
 
-function trans(s) {
-    return s && s.trim().length > 0 ? s.trim() : '';
-}
-
 app.post('/task/add-task', function (req, res) {
 
     //需要登陆
