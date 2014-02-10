@@ -11,6 +11,8 @@ var db = require('db');
 var xss = require('xss')
 var taskValidator = require('./../task-validator')
 
+var requireField = ['需求名称', '任务类型', '任务时长', '需求方']
+
 app.post('/task/add-task', function (req, res) {
 
     //需要登陆
@@ -48,7 +50,7 @@ app.post('/task/add-task', function (req, res) {
         return
     }
 
-    json.forEach(function (item) {
+    json.forEach(function (item, index) {
 
         var keys = Object.keys(item)
 
@@ -57,10 +59,20 @@ app.post('/task/add-task', function (req, res) {
             return
         }
 
+        var _i = '第' + (index + 1) + '行'
+
         // 四个必须存在的字段 '需求名称', '任务类型', '任务时长', '需求方'
         if (keys.indexOf('需求名称') < 0 || keys.indexOf('任务类型') < 0 && keys.indexOf('任务时长') < 0 && keys.indexOf('需求方') < 0) {
-            serverInfo.taskError.push(JSON.stringify(item) + '缺少必要的字段')
+            serverInfo.taskError.push(_i + '缺少必要的字段')
             return
+        }
+
+        for (var i = 0; i < requireField.length; i++) {
+            var key = requireField[i];
+            if (taskValidator[key](item[key]) === false) {
+                serverInfo.taskError.push(_i + '的' + key + '不能为空')
+                return
+            }
         }
 
         keys.forEach(function (key) {
@@ -92,7 +104,7 @@ app.post('/task/add-task', function (req, res) {
     });
 
     //检查数据是否错了
-    if (serverInfo.taskError.length > 0) {
+    if (serverInfo.taskError.length > 0 || serverInfo.err.length > 0) {
         serverInfo.status = -3;
         res.json(serverInfo);
         return;

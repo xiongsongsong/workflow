@@ -81,7 +81,7 @@ define(function (require, exports, module) {
                         if (data.success) {
                             window.location.href = '/task/own-task-list'
                         } else {
-                            alert('遇到错误，请严格按照模板规则来保存数据')
+                            alert('没有保存任何数据，遇到错误，请检查。\r\n' + ( data.err.length > 0 ? data.err.join('，') : '') + data.taskError.join('，'))
                         }
                     })
                     .error(function () {

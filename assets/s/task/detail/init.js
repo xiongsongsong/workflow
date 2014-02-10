@@ -66,6 +66,7 @@ define(function () {
             }
         }).done(function (data) {
                 console.log('成功传入文件' + data)
+                window.location.reload()
             }).error(function () {
                 console.log('保存文件记录失败')
             })
