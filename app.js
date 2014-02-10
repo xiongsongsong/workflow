@@ -24,6 +24,11 @@ db.open(function () {
     app.use(express.json());
     app.use(express.urlencoded());
     app.use(express.methodOverride());
+
+    //req.body实体大小为10M
+    app.use(express.limit(11 * 1024 * 1000));
+    app.use(express.bodyParser({keepExtensions: false, uploadDir: __dirname + '/temp'}));
+
     app.use(express.cookieParser('work-flow'));
     app.use(require('stylus').middleware(path.join(__dirname, 'assets')));
     app.use(express.static(path.join(__dirname, 'assets')));
@@ -37,8 +42,6 @@ db.open(function () {
             db: 'workflow-session'
         })
     }));
-
-    app.use(express.csrf());
 
     app.use(express.errorHandler());
 
@@ -55,10 +58,14 @@ db.open(function () {
         global.hostDOMAIN = 'http://localhost'
     }
 
+    app.use(express.csrf());
+
     app.use(function (req, res, next) {
-        res.locals.req = req;
+        res.locals.req = req
+        res.locals.token = req.csrfToken()
         next();
     });
+
 
     http.createServer(app).listen(app.get('port'), function () {
         console.log('Express server listening on port ' + app.get('port'));
