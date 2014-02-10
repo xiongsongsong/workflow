@@ -7,6 +7,7 @@ var app = require('app')
 var db = require('db')
 var xss = require('xss')
 var helper = require('helper')
+var taskValidator = require('./../task-validator')
 
 
 //有权限修改字段名：所对应的组角色
@@ -67,6 +68,16 @@ app.post(/\/task\/modify\/([a-z0-9]{24})/, function (req, res) {
                 name: xss(req.body.key),
                 modify_value: xss(xss(req.body.value))
             }
+        }
+
+        if (req.body.key === '任务时长') {
+            if (taskValidator.任务时长(req.body.value) === false) {
+                server.err.push('任务时长值不正确')
+                server.status = -5
+                res.json(server)
+                return
+            }
+            $set['task.任务时长'] = parseInt(req.body.value, 10)
         }
 
         $push.history.ts = Date.now()

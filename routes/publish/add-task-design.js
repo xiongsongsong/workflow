@@ -9,6 +9,7 @@
 var app = require('app');
 var db = require('db');
 var xss = require('xss')
+var taskValidator = require('./../task-validator')
 
 function trans(s) {
     return s && s.trim().length > 0 ? s.trim() : '';
@@ -68,11 +69,11 @@ app.post('/task/add-task', function (req, res) {
 
         keys.forEach(function (key) {
             if (key === '任务时长') {
-                item[key] = parseInt(item[key], 10)
-                if (isNaN(item[key]) || item[key] < 0 || item[key] > 360) {
-                    serverInfo.taskError.push(JSON.stringify(item) + '出错了')
+                if (taskValidator.任务时长(item[key]) === false) {
+                    serverInfo.taskError.push(key + '=' + item[key] + '，是非法值')
                     return
                 }
+                item[key] = parseInt(item[key], 10)
             } else {
                 //防止xss
                 var _value = xss(item[key])

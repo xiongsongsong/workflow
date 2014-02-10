@@ -38,7 +38,16 @@ block content
                         h2 需求记录
                         - var date=new Date(ts)
                         ul.record
-                            li #{date.getFullYear()}.#{date.getMonth()+1}.#{date.getDate()} 完成需求提交
+                            li #{date.getFullYear()}.#{date.getMonth()+1}.#{date.getDate()}
+                               |#{date.getHours()}:#{date.getMinutes()}:#{date.getSeconds()}完成需求提交
+                            -if(Array.isArray(history))
+                                -history.forEach(function(item){
+                                    -var date=new Date(item.ts)
+                                    li
+                                        |#{date.getFullYear()}.#{date.getMonth()+1}.#{date.getDate()}
+                                        |#{date.getHours()}:#{date.getMinutes()}:#{date.getSeconds()}
+                                        |#{item.from_user}将#{item.name}设置为#{item.modify_plain_value?item.modify_plain_value:item.value}
+                                -})
                 -if(task['设计师']===undefined)
                     .J-push.push
                         h2 该任务分配给
