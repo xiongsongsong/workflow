@@ -29,3 +29,6 @@ require('./user')
 
 //保存各种文件
 require('./save-file')
+
+//读取文件
+require('./read')
