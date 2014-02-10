@@ -60,7 +60,8 @@ define(function () {
             dataType: 'json',
             data: {
                 _csrf: window._csrf_token_,
-                origin_name: data.origin_name,
+                file_id: data.file_id,
+                file_name: data.file_name,
                 size: data.size
             }
         }).done(function (data) {

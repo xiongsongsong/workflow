@@ -89,6 +89,7 @@ function saveFile(req, res) {
     var options = {
         chunk_size: 1024 * 256 * 10,
         metadata: {
+            file_name: file.name,
             owner: ownerID
         }
     }
@@ -152,7 +153,9 @@ function saveFile(req, res) {
         })
     } else {
         //其它格式，直接保存
-        var fileName = file.fileId + '.' + file.format
+        var fileName = file.fileId + '.' + extName
+        uploadInfo.file_id = fileName
+        uploadInfo.file_name = file.name
         var gs = new GridStore(DB.dbServer, fileName, fileName, "w", options)
         gs.writeFile(file.path, function (err) {
             if (err) {
@@ -232,7 +235,8 @@ function saveFile(req, res) {
                 var gs = new GridStore(DB.dbServer, fileName, fileName, "w", options)
                 gs.writeFile(quality90Path, function (err) {
                     if (!err) {
-                        uploadInfo._id = fileName + ':' + file.name
+                        uploadInfo.file_id = fileName
+                        uploadInfo.file_name = file.name
                         end()
                         saveFull(file)
                     } else {

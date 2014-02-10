@@ -63,6 +63,11 @@ db.open(function () {
     app.use(function (req, res, next) {
         res.locals.req = req
         res.locals.token = req.csrfToken()
+        res.locals.timerZeros = function (str) {
+            if (str === undefined) return ''
+            str = str.toString()
+            return typeof str === 'string' && str.length < 2 ? '0' + str : str;
+        }
         next();
     });
 

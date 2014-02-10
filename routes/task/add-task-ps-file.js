@@ -23,7 +23,8 @@ app.post(/\/task\/add-task-ps-file\/([a-z0-9]{24})/, function (req, res) {
 
     var $push = { history: {} }
     $push.history.type = '上传附件'
-    $push.history.fileName = xss(req.body.origin_name)
+    $push.history.file_id = xss(req.body.file_id)
+    $push.history.file_name = xss(req.body.file_name)
     $push.history.size = xss(req.body.size)
     $push.history.ts = Date.now()
     $push.history.from_id = req.session._id
