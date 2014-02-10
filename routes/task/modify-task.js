@@ -13,7 +13,8 @@ var taskValidator = require('./../task-validator')
 //有权限修改字段名：所对应的组角色
 var white = {
     设计师: '指派计件任务设计师',//eg:只有‘指派计件任务设计师’的组，才能修改‘设计师’字段
-    备注: '添加计件需求'
+    备注: '添加计件需求',
+    任务时长: '修改任务时长'
 }
 
 app.post(/\/task\/modify\/([a-z0-9]{24})/, function (req, res) {

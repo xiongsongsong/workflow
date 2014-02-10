@@ -46,7 +46,7 @@ block content
                                     li
                                         |#{date.getFullYear()}.#{date.getMonth()+1}.#{date.getDate()}
                                         |#{date.getHours()}:#{date.getMinutes()}:#{date.getSeconds()}
-                                        |#{item.from_user}将#{item.name}设置为#{item.modify_plain_value?item.modify_plain_value:item.value}
+                                        |#{item.from_user}将#{item.name}设置为#{item.modify_plain_value?item.modify_plain_value:item.modify_value}
                                 -})
                 -if(task['设计师']===undefined)
                     .J-push.push
