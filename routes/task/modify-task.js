@@ -59,18 +59,19 @@ app.post(/\/task\/modify\/([a-z0-9]{24})/, function (req, res) {
                 //value和plain_value的区别，value是用来做查询的关键字段，而plain_value是方便人查看的明文的文本
                 //例如 value用来展示用户的id，而plain_value用来保存用户的姓名
                 modify_value: xss(xss(req.body.value)),
-                modify_plain_value: xss(xss(req.body.plain_value)),
-                ts: Date.now()
+                modify_plain_value: xss(xss(req.body.plain_value))
             }
         } else {
             $set['task.' + req.body.key] = xss(req.body.value)
             $push.history = {
                 name: xss(req.body.key),
-                modify_value: xss(xss(req.body.value)),
-                ts: Date.now()
+                modify_value: xss(xss(req.body.value))
             }
         }
 
+        $push.history.ts = Date.now()
+        $push.history.from_id = req.session._id
+        $push.history.from_user = req.session.user
 
         if (server.err.length > 0) {
             server.status = -4
