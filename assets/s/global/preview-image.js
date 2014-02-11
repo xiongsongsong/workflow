@@ -6,12 +6,19 @@
  */
 
 $(function () {
+
+    $('<div id="preview-img" style="position:fixed;left:0;top:0;z-index:12;"></div><div id="preview-close" style="display:none;background:#aaa;position:fixed;cursor:pointer;right:0;top:0;line-height:50px;font-size:50px;z-index:13;color:#fff;padding:0 12px;background:#000;filter:alpha(opacity=40);opacity:.5;">&times</div><div id="preview-img-mask"' +
+        ' style="display:none;position:fixed;left:0;top:0;bottom:0;right:0;z-index:11;background:#000;' +
+        'filter:alpha(opacity=40);opacity:.5;"></div>').append($(document.body))
     var $preview = $('#preview-img')
-    $('.J-preview-image').on('click', function (ev) {
-        if ($preview.find('img').length < 1) {
-            $('<img src="' + ev.target.src + '?m=full-size" />').appendTo($preview)
+
+    $('.J-preview-file').on('click', function (ev) {
+        var $this = $(ev.currentTarget)
+        if ($this.data('file-id') && /(?:jpg|gif|jpeg|png)$/gi.test($this.data('file-id'))) {
+            ev.preventDefault()
+            $('<img src="' + ev.currentTarget.href + '?m=full-size" />').appendTo($preview)
+            show()
         }
-        show()
     })
 
     var $mask = $('#preview-img-mask')

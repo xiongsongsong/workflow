@@ -1,4 +1,4 @@
-define(function () {
+define(function (require, exports, module) {
     function initDesigner() {
         $.getJSON('/user/onsite/onsite-design-user', function (data) {
             var str = ''
