@@ -25,8 +25,8 @@ db.open(function () {
     app.use(express.urlencoded());
     app.use(express.methodOverride());
 
-    //req.body实体大小为10M
-    app.use(express.limit(11 * 1024 * 1000));
+    //req.body实体大小为51M
+    app.use(express.limit(51 * 1024 * 1000));
     app.use(express.bodyParser({keepExtensions: false, uploadDir: __dirname + '/temp'}));
 
     app.use(express.cookieParser('work-flow'));
