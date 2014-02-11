@@ -21,6 +21,13 @@ app.post(/\/task\/add-task-ps-file\/([a-z0-9]{24})/, function (req, res) {
         return
     }
 
+    if (!req.body.file_id || !req.body.file_name) {
+        server.err.push('缺少必要的参数')
+        server.status = -5
+        res.json(server)
+        return
+    }
+
     var $push = { history: {} }
     $push.history.type = '上传附件'
     $push.history.file_id = xss(req.body.file_id)

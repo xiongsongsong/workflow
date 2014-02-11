@@ -54,6 +54,7 @@ define(function () {
 
     window.taskFileUploadCallBack = function (data) {
         //将上传成功的文件，保存到task.history中
+        if (!data.file_id) return
         $.ajax({
             url: '/task/add-task-ps-file/' + window.taskId,
             type: 'post',

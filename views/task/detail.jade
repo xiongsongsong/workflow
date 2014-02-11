@@ -54,7 +54,8 @@ block content
                             input(type='hidden',name='_csrf',value='#{token}')
                             input(type='hidden',name='callBackName',value='taskFileUploadCallBack')
                             p
-                                input(type='file',name="file",value="上传文件")
+                                label(for='upload-file') 上传文件
+                                    input#upload-file(type='file',name="file",value="上传文件",style='position:absolute;left:-9999em;top:-9999em;')
                             p
                                 input(type='submit',value='提交')
                         iframe(name='task-ps-file-iframe',width='0',height='0',style='position:absolute;left:-9999em;top:-9999em;')
