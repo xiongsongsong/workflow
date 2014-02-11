@@ -6,6 +6,7 @@ block js
         seajs.use('s/login/main-login')
 block content
     form#login(action="/login/checkLogin",method="post",autocomplete="off")
+        img.logo(src='/s/global/logo.png',style="position:absolute;left:50%;top:-160px;margin-left:-54px;")
         input(type="hidden",name="_csrf",value="#{token}")
         .user-name
             label 用户名
