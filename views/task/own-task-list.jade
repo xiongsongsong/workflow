@@ -14,19 +14,22 @@ block content
         #main-container-container
             #main-container-content
                 h2 我添加的需求
-                .table-wrapper
-                    .table-content
-                        table.task-list.task-list-normal
-                            tr
-                                th(width="80%")
-                                    .wrapper 需求名称
-                                th(width="10%")
-                                    .wrapper 需求方
-                            - docs.forEach(function(item){
-                              tr
-                                    td
-                                        .wrapper
-                                            a(href='/task/detail/#{item._id}') #{item.task['需求名称']}
-                                    td
-                                        .wrapper=item.task['需求方']
-                            - })
+                -if (docs.length>0)
+                    .table-wrapper
+                        .table-content
+                            table.task-list.task-list-normal
+                                tr
+                                    th(width="80%")
+                                        .wrapper 需求名称
+                                    th(width="10%")
+                                        .wrapper 需求方
+                                - docs.forEach(function(item){
+                                    tr
+                                        td
+                                            .wrapper
+                                                a(href='/task/detail/#{item._id}') #{item.task['需求名称']}
+                                        td
+                                            .wrapper=item.task['需求方']
+                                - })
+                - else
+                    p(style="margin:12px 0;") 您暂无需求提交记录
