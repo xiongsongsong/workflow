@@ -44,7 +44,7 @@ block content
                                         | #{date.getFullYear()}.#{timerZeros(date.getMonth()+1)}.#{timerZeros(date.getDate())}
                                         | #{timerZeros(date.getHours())}:#{timerZeros(date.getMinutes())}:#{timerZeros(date.getSeconds())}
                                         -if(item.type==='修改字段')
-                                            |  #{item.from_user}将#{item.name}设置为#{item.modify_plain_value?item.modify_plain_value:item.modify_value}
+                                            |  #{item.from_user}将#{item.name}指定为#{item.modify_plain_value?item.modify_plain_value:item.modify_value}
                                         -if(item.type==='上传附件')
                                             |  #{item.from_user}上传了附件<a href="/read/#{item.file_id}" data-file-id='#{item.file_id}'>#{item.file_name}</a>
                                 -})
