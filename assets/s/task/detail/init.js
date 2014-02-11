@@ -58,6 +58,8 @@ define(function () {
     window.taskFileUploadCallBack = function (data) {
         //将上传成功的文件，保存到task.history中
         if (!data.file_id) {
+            $upload.val('上传')
+            $upload.data('is-runing', false)
             alert(data.err.join(''))
             return
         }
@@ -74,6 +76,7 @@ define(function () {
             }
         }).done(function () {
                 $upload.val('上传')
+                $upload.data('is-runing', false)
                 window.location.reload()
             }).error(function () {
                 alert('保存文件记录失败')
