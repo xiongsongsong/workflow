@@ -160,8 +160,8 @@ function saveFile(req, res) {
         gs.writeFile(file.path, function (err) {
             if (err) {
                 uploadInfo.err.push('无法保存' + file.name)
-                unlink(file.path)
             }
+            unlink(file.path)
             end()
         })
     }
