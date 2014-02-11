@@ -7,7 +7,6 @@ var app = require('app')
 var db = require('db')
 var xss = require('xss')
 var helper = require('helper')
-var taskValidator = require('./../task-validator')
 
 //有权限修改字段名：所对应的组角色
 var white = {

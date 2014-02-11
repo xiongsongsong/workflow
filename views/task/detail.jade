@@ -11,12 +11,13 @@ block content
             li
                 a(href="/task/add-task") 添加新需求
             li
-                a(href="/task/own-task-list") 我添加的需求
+                a(href="/task/own-task-list") 我相关的需求
     #main-container-wrapper
         #main-container-container
             #main-container-content
                 h2 名称：
                     =task['需求名称']
+                    | <a href="javascript:window.history.back()" style="font-size:12px;margin:0 12px;color:red;">&lt;&lt;返回上一页</a>
                 ul.task-info
                     li(style='margin-bottom:12px;') 需求方：#{task['需求方']}
                     -Object.keys(task).forEach(function(key){
@@ -44,9 +45,9 @@ block content
                                         | #{date.getFullYear()}.#{timerZeros(date.getMonth()+1)}.#{timerZeros(date.getDate())}
                                         | #{timerZeros(date.getHours())}:#{timerZeros(date.getMinutes())}:#{timerZeros(date.getSeconds())}
                                         -if(item.type==='修改字段')
-                                            |  #{item.from_user}将#{item.name}指定为#{item.modify_plain_value?item.modify_plain_value:item.modify_value}
+                                            | #{item.from_user}将#{item.name}指定为#{item.modify_plain_value?item.modify_plain_value:item.modify_value}
                                         -if(item.type==='上传附件')
-                                            |  #{item.from_user}上传了附件<a class="file" href="/read/#{item.file_id}" download="#{item.file_name}" data-file-id="#{item.file_id}">#{item.file_name}</a>
+                                            | #{item.from_user}上传了附件<a class="file" href="/read/#{item.file_id}" download="#{item.file_name}" data-file-id="#{item.file_id}">#{item.file_name}</a>
                                 -})
                         form(action="/save/task-ps-file",method='post',enctype="multipart/form-data",target='task-ps-file-iframe')
                             input(type='hidden',name='_csrf',value='#{token}')
