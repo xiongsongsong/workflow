@@ -14,7 +14,7 @@ app.get('/task/own-task-list', function (req, res) {
         //如果是计件任务设计师，则只显示自己该处理的需求
         var filter = {}
 
-        if (!req.isLogin(req)) {
+        if (!helper.isLogin(req)) {
             res.redirect('/')
             return
         }

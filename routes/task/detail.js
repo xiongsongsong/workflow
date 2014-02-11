@@ -4,11 +4,12 @@
 
 var app = require('app')
 var db = require('db')
+var helper = require('helper')
 
 app.get(/\/task\/detail\/([a-z0-9]{24})/, function (req, res) {
 
     //todo:权限验证
-    if (!req.isLogin(req)) {
+    if (!helper.isLogin(req)) {
         res.redirect('/')
         return
     }
