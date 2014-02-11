@@ -22,7 +22,7 @@ block content
                 ul.task-info
                     li(style='margin-bottom:12px;') 需求方：#{task['需求方']}
                     -Object.keys(task).forEach(function(key){
-                        -if(key!=='需求名称' && key!=='需求方' && task[key]){
+                        -if(key!=='需求名称' && key!=='需求方' && key!=='设计师id' && task[key]){
                             li #{key}： #{task[key]}
                         -}
                     -})
