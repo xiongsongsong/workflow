@@ -2,8 +2,8 @@ extends /layout
 block css
     link(rel='stylesheet',href="/s/task/detail.css")
 block js
-    script(src="/s/global/preview-image.js")
     script.
+        seajs.use('/s/global/preview-image.js')
         var taskId='#{_id}';seajs.use('s/task/detail/init')
 block content
     #sidebar

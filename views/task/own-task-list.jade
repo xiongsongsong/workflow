@@ -2,7 +2,8 @@ extends /layout
 block css
     link(rel='stylesheet',href="/s/task/own-task-list.css")
 block js
-    script(src="/s/global/preview-image.js")
+    script.
+        seajs.use('/s/global/preview-image.js')
 block content
     #sidebar
         include /sidebar-avatar-menu
