@@ -58,7 +58,7 @@ block content
                             p
                                 input.btn.btn-confirm(type='submit',value='上传')
                         iframe(name='task-ps-file-iframe',width='0',height='0',style='position:absolute;left:-9999em;top:-9999em;')
-                -if(task['设计师']===undefined)
+                -if(task['设计师']===undefined && req.session.group.indexOf('指派计件任务设计师')>-1)
                     .J-push.push
                         h2 等待分配设计师
                         .btn-area.J-select-user
