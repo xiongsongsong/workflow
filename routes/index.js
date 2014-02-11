@@ -9,7 +9,7 @@ app.get('/', function (req, res) {
     if (!helper.isLogin(req)) {
         res.render('login/main-login', { title: '流程平台登陆' });
     } else {
-        res.render('administrator/index')
+        res.redirect('/task/own-task-list')
     }
 });
 
