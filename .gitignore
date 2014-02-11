@@ -1,3 +1,5 @@
 *.css
 !assets/s/cssreset-min.css
 .idea/
+temp/*
+!temp/readme.md

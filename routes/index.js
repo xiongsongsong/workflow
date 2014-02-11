@@ -5,11 +5,11 @@
 var app = require('app')
 var helper = require('helper')
 
-app.get('/', helper.csrf, function (req, res) {
+app.get('/', function (req, res) {
     if (!helper.isLogin(req)) {
         res.render('login/main-login', { title: '流程平台登陆' });
     } else {
-        res.render('administrator/index')
+        res.redirect('/task/own-task-list')
     }
 });
 
@@ -26,3 +26,9 @@ require('./avatar')
 
 //查询当前onsite设计师等等
 require('./user')
+
+//保存各种文件
+require('./save-file')
+
+//读取文件
+require('./read')

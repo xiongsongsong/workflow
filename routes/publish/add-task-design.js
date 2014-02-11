@@ -9,10 +9,9 @@
 var app = require('app');
 var db = require('db');
 var xss = require('xss')
+var taskValidator = require('./../task-validator')
 
-function trans(s) {
-    return s && s.trim().length > 0 ? s.trim() : '';
-}
+var requireField = ['需求名称', '任务类型', '需求方']
 
 app.post('/task/add-task', function (req, res) {
 
@@ -51,7 +50,7 @@ app.post('/task/add-task', function (req, res) {
         return
     }
 
-    json.forEach(function (item) {
+    json.forEach(function (item, index) {
 
         var keys = Object.keys(item)
 
@@ -60,27 +59,21 @@ app.post('/task/add-task', function (req, res) {
             return
         }
 
-        // 四个必须存在的字段 '需求名称', '任务类型', '任务时长', '需求方'
-        if (keys.indexOf('需求名称') < 0 || keys.indexOf('任务类型') < 0 && keys.indexOf('任务时长') < 0 && keys.indexOf('需求方') < 0) {
-            serverInfo.taskError.push(JSON.stringify(item) + '缺少必要的字段')
+        var _i = '第' + (index + 1) + '行'
+
+        // 四个必须存在的字段 '需求名称', '任务类型', '需求方'
+        if (keys.indexOf('需求名称') < 0 || keys.indexOf('任务类型') < 0 && keys.indexOf('需求方') < 0) {
+            serverInfo.taskError.push(_i + '缺少必要的字段')
             return
         }
 
-        keys.forEach(function (key) {
-            if (key === '任务时长') {
-                item[key] = parseInt(item[key], 10)
-                if (isNaN(item[key]) || item[key] < 0 || item[key] > 360) {
-                    serverInfo.taskError.push(JSON.stringify(item) + '出错了')
-                    return
-                }
-            } else {
-                //防止xss
-                var _value = xss(item[key])
-                var _key = xss(key)
-                delete item[key]
-                item[_key] = _value
+        for (var i = 0; i < requireField.length; i++) {
+            var key = requireField[i];
+            if (taskValidator[key](item[key]) === false) {
+                serverInfo.taskError.push(_i + '的' + key + '不能为空')
+                return
             }
-        })
+        }
 
         //只有“指派计件任务设计师”组，有权限更改此字段
         delete item['设计师']
@@ -95,7 +88,7 @@ app.post('/task/add-task', function (req, res) {
     });
 
     //检查数据是否错了
-    if (serverInfo.taskError.length > 0) {
+    if (serverInfo.taskError.length > 0 || serverInfo.err.length > 0) {
         serverInfo.status = -3;
         res.json(serverInfo);
         return;

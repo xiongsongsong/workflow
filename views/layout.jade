@@ -16,7 +16,7 @@ html
             if(!window.console)window.console=function(){}
         script(src="http://g.tbcdn.cn/kissy/k/1.4.0/seed-min.js")
         script(id="seajsnode",src="#{assetsCDN}/s/sea.js")
-        script(id="seajsnode",src="#{assetsCDN}/s/sea-modules/seajs/seajs-text/1.0.3/seajs-text.js")
+        script(id="seajsnode",src="#{assetsCDN}/s/sea-modules/seajs/seajs-text/1.0.2/seajs-text.js")
         script.
             KISSY.config({
                 modules: {
@@ -47,7 +47,9 @@ html
                 preload: ['$']
                 });
             //seajs.use('s/login/main-login')
-            var _csrf_token_="#{req.csrfToken()}"
+            var _csrf_token_="#{token}"
     body
+        #header
+            img.logo(src='/s/global/small-logo.png',style="position:relative;left:12px;top:12px;")
         block content
         block js

@@ -2,39 +2,46 @@ extends /layout
 block css
     link(rel='stylesheet',href="/s/task/own-task-list.css")
 block js
-    script.
-        seajs.use('s/task/own-task-list')
 block content
     #sidebar
         include /sidebar-avatar-menu
         ul.menu
             li
-                a(href="/task/add-task") 发放需求
+                a(href="/task/add-task") 添加新需求
             li
-                a.current(href="/task/own-task-list") 我添加的需求
-            li
-                a(href="search-task") 搜索需求
+                a.current(href="/task/own-task-list") 我相关的需求
     #main-container-wrapper
         #main-container-container
             #main-container-content
-                h2 我添加的需求
-                .table-wrapper
-                    .table-content
-                        table.task-list.task-list-normal
-                            tr
-                                th(width="80%")
-                                    .wrapper 需求名称
-                                th(width="10%")
-                                    .wrapper 需求方
-                                th(width="10%")
-                                    .wrapper 任务时长
-                            - docs.forEach(function(item){
-                              tr
-                                    td
-                                        .wrapper
-                                            a(href='/task/detail/#{item._id}') #{item.task['需求名称']}
-                                    td
-                                        .wrapper=item.task['需求方']
-                                    td
-                                        .wrapper=item.task['任务时长']
-                            - })
+                h2 最近30天的需求
+                -if (docs.length>0)
+                    .table-wrapper
+                        .table-content
+                            table.task-list.task-list-normal
+                                tr
+                                    th(width="40%")
+                                        .wrapper 需求名称
+                                    th(width="10%")
+                                        .wrapper 需求方
+                                    th(width="50%")
+                                        .wrapper 最新状况
+                                - docs.forEach(function(item){
+                                    tr
+                                        td
+                                            .wrapper
+                                                a(href='/task/detail/#{item._id}') #{item.task['需求名称']}
+                                        td
+                                            .wrapper=item.task['需求方']
+                                        td
+                                            .wrapper
+                                                -if(Array.isArray(item.history))
+                                                    -var history=item.history[item.history.length-1]
+                                                    -if(history.type==='修改字段')
+                                                        | #{history.from_user}将#{history.name}指定为#{history.modify_plain_value?history.modify_plain_value:history.modify_value}
+                                                    -if(history.type==='上传附件')
+                                                        | #{history.from_user}上传了附件<a class="file" href="/read/#{history.file_id}" download="#{history.file_name}" data-file-id='#{history.file_id}'>#{history.file_name}</a>
+                                                -else
+                                                    | 尚未处理
+                                - })
+                - else
+                    p(style="margin:12px 0;") 您暂无需求提交记录

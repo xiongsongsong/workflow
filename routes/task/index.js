@@ -4,7 +4,7 @@
 
 var app = require('app')
 
-//我添加的需求
+//我相关的需求
 require('./own-task-list')
 
 //任务详情
@@ -22,3 +22,6 @@ app.get('/task/add-task', function (req, res) {
 
 //修改任务单
 require('./modify-task')
+
+//给某个任务增加文件记录
+require('./add-task-ps-file')

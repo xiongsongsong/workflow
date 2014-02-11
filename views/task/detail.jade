@@ -3,27 +3,24 @@ block css
     link(rel='stylesheet',href="/s/task/detail.css")
 block js
     script.
-        var taskId='#{_id}'
-        seajs.use('s/task/detail/init')
+        var taskId='#{_id}';seajs.use('s/task/detail/init')
 block content
     #sidebar
         include /sidebar-avatar-menu
         ul.menu
             li
-                a(href="/task/add-task") 发放需求
+                a(href="/task/add-task") 添加新需求
             li
-                a(href="/task/own-task-list") 我添加的需求
-            li
-                a(href="search-task") 搜索需求
+                a(href="/task/own-task-list") 我相关的需求
     #main-container-wrapper
         #main-container-container
             #main-container-content
-                h2 名称：
-                    =task['需求名称']
+                h2=task['需求名称']
+                    | <a href="javascript:window.history.back()" style="font-size:12px;margin:0 12px;color:red;">&lt;&lt;返回上一页</a>
                 ul.task-info
                     li(style='margin-bottom:12px;') 需求方：#{task['需求方']}
                     -Object.keys(task).forEach(function(key){
-                        -if(key!=='需求名称' && key!=='需求方' && task[key]){
+                        -if(key!=='需求名称' && key!=='需求方' && key!=='设计师id' && task[key]){
                             li #{key}： #{task[key]}
                         -}
                     -})
@@ -38,10 +35,44 @@ block content
                         h2 需求记录
                         - var date=new Date(ts)
                         ul.record
-                            li #{date.getFullYear()}.#{date.getMonth()+1}.#{date.getDate()} 完成需求提交
+                            li #{date.getFullYear()}.#{timerZeros(date.getMonth()+1)}.#{timerZeros(date.getDate())}
+                                | #{timerZeros(date.getHours())}:#{timerZeros(date.getMinutes())}:#{timerZeros(date.getSeconds())} 完成需求提交
+                            -if(Array.isArray(history))
+                                -history.forEach(function(item){
+                                    -var date=new Date(item.ts)
+                                    li
+                                        | #{date.getFullYear()}.#{timerZeros(date.getMonth()+1)}.#{timerZeros(date.getDate())}
+                                        | #{timerZeros(date.getHours())}:#{timerZeros(date.getMinutes())}:#{timerZeros(date.getSeconds())}
+                                        -if(item.type==='修改字段')
+                                            | #{item.from_user}将#{item.name}指定为#{item.modify_plain_value?item.modify_plain_value:item.modify_value}
+                                        -if(item.type==='上传附件')
+                                            | #{item.from_user}上传了附件<a class="file" href="/read/#{item.file_id}" download="#{item.file_name}" data-file-id="#{item.file_id}">#{item.file_name}</a>
+                                -})
+                        form(action="/save/task-ps-file",method='post',enctype="multipart/form-data",target='task-ps-file-iframe')
+                            input(type='hidden',name='_csrf',value='#{token}')
+                            input(type='hidden',name='callBackName',value='taskFileUploadCallBack')
+                            p.upload-file
+                                label.upload-file-trigger(for='upload-file') 选择文件（50Mb以内）
+                                    input#upload-file(type='file',name="file",value="",style='font-size:12px;')
+                            p(style='margin-bottom:8px;') 小提示，如果您是设计师，在定稿前均请传送jpg或png格式图片，方便他人查看
+                            p
+                                input.btn.btn-confirm(type='submit',value='上传')
+                        iframe(name='task-ps-file-iframe',width='0',height='0',style='position:absolute;left:-9999em;top:-9999em;')
                 -if(task['设计师']===undefined)
                     .J-push.push
-                        h2 该任务分配给
+                        h2 等待分配设计师
                         .btn-area.J-select-user
                         a.btn.btn-confirm.J-confirm-user 确认选择
-
+                //-if(req.session.group.indexOf('审核计件任务')>-1)
+                    .control.task-control-wrapper
+                        p 如果对设计师提交的作品满意，则点击通过审核，否则点击需要修改
+                        input.btn.btn-success.J-pass-task-version(type='button',value='通过审核')
+                        input.btn.btn-danger.J-deny-task-version(type='button',value='需要修改')
+                //-if(req.session.group.indexOf('关闭计件任务')>-1)
+                    .control.close-control-wrapper
+                        p 如需求已经完成，且需求方最终认可，则可以点击完成这个需求，方便后续统计完成情况。
+                        input.btn.btn-danger.J-deny-task-version(type='button',value='完成这个需求')
+                //-if(req.session.group.indexOf('删除计件任务')>-1)
+                    .control.delete-control-wrapper
+                        p 如果需求作废，请删除这个需求。操作后，这个需求就不存在了。
+                        input.btn.btn-danger.J-delete-task-version(type='button',value='删除这个需求')

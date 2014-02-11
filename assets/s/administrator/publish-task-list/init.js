@@ -35,7 +35,11 @@ define(function (require, exports, module) {
                     path['fill-excel-data'].data = $('#excel-data').val()
                     path['filter-excel-data'].data = transExcelData($('#excel-data').val())
                     var tpl = require('./filter-excel-data.tpl')
-                    $content.html(template.render(tpl, { data: path['filter-excel-data'].data }))
+                    if (path['filter-excel-data'].data) {
+                        $content.html(template.render(tpl, { data: path['filter-excel-data'].data }))
+                    } else {
+                        alert('数据解析失败')
+                    }
                 }
             }
         },
@@ -47,6 +51,8 @@ define(function (require, exports, module) {
                 if (!confirm('确认发布需求？')) {
                     return
                 }
+
+
                 path['filter-excel-data'].html = $content.html()
                 var $alreadyTh = $('th.J-fields');
                 var cell = (function () {
@@ -81,7 +87,7 @@ define(function (require, exports, module) {
                         if (data.success) {
                             window.location.href = '/task/own-task-list'
                         } else {
-                            alert('遇到错误，请严格按照模板规则来保存数据')
+                            alert('没有保存任何数据，遇到错误，请检查。\r\n' + ( data.err.length > 0 ? data.err.join('，') : '') + data.taskError.join('，'))
                         }
                     })
                     .error(function () {
