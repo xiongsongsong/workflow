@@ -13,7 +13,7 @@ define(function (require, exports, module) {
         'filter:alpha(opacity=40);opacity:.5;"></div>').append($(document.body))
     var $preview = $('#preview-img')
 
-    $('.J-preview-file').on('click', function (ev) {
+    $(document).on('click', '.J-preview-file', function (ev) {
         var $this = $(ev.currentTarget)
         if ($this.data('file-id') && /(?:jpg|gif|jpeg|png)$/gi.test($this.data('file-id'))) {
             ev.preventDefault()
