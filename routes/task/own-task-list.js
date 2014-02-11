@@ -19,12 +19,20 @@ app.get('/task/own-task-list', function (req, res) {
             return
         }
 
+        //todo:此处待拆分，权限混乱，用户可设定的很少
+
         if (group.indexOf('计件任务设计师') > -1) {
             filter = {'task.设计师': req.session.user}
         }
 
-        if (group.indexOf('添加计件需求') > -1 || group.indexOf('指派计件任务设计师') > -1) {
+        if (group.indexOf('添加计件需求') > -1) {
             filter = {from_id: req.session._id, ts: {$gte: Date.now() - 3600 * 1000 * 24 * 30}}
+        }
+
+        //注意：需求方是没有权限指定计件任务的设计师的
+        //需求方只能查看自己相关的需求
+        if (group.indexOf('指派计件任务设计师') > -1) {
+            filter = {ts: {$gte: Date.now() - 3600 * 1000 * 24 * 30}}
         }
 
         if (Object.keys(filter).length < 1) {

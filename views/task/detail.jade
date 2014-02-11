@@ -64,3 +64,16 @@ block content
                         h2 等待分配设计师
                         .btn-area.J-select-user
                         a.btn.btn-confirm.J-confirm-user 确认选择
+                //-if(req.session.group.indexOf('审核计件任务')>-1)
+                    .control.task-control-wrapper
+                        p 如果对设计师提交的作品满意，则点击通过审核，否则点击需要修改
+                        input.btn.btn-success.J-pass-task-version(type='button',value='通过审核')
+                        input.btn.btn-danger.J-deny-task-version(type='button',value='需要修改')
+                //-if(req.session.group.indexOf('关闭计件任务')>-1)
+                    .control.close-control-wrapper
+                        p 如需求已经完成，且需求方最终认可，则可以点击完成这个需求，方便后续统计完成情况。
+                        input.btn.btn-danger.J-deny-task-version(type='button',value='完成这个需求')
+                //-if(req.session.group.indexOf('删除计件任务')>-1)
+                    .control.delete-control-wrapper
+                        p 如果需求作废，请删除这个需求。操作后，这个需求就不存在了。
+                        input.btn.btn-danger.J-delete-task-version(type='button',value='删除这个需求')

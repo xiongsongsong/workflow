@@ -18,7 +18,7 @@ app.post('/login', function (req, res) {
     user.findOne({
         user: req.body._,
         pwd: req.body.__
-    }, {_id: 1, user: 1, ts: 1}, function (err, data) {
+    }, {_id: 1, user: 1, group: 1, ts: 1}, function (err, data) {
         if (err === null && data !== null) {
             info._id = data._id
             info.status = 1
@@ -29,7 +29,7 @@ app.post('/login', function (req, res) {
             req.session.login_ts = Date.now()
             req.session.user = data.user
             req.session._id = data._id
-            console.log(data.user + '登陆成功')
+            req.session.group = data.group
 
         } else {
             info.status = -2
