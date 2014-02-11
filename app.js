@@ -15,10 +15,11 @@ var db = require('db')
 db.open(function () {
 
     // all environments
-    app.set('port', process.env.PORT || 80);
+    app.set('port', process.env.PORT || 1280);
     app.set('views', path.join(__dirname, 'views'));
     app.locals.basedir = './views'
     app.set('view engine', 'jade');
+    app.set('view cache', true)
     app.use(express.favicon());
     app.use(express.logger('dev'));
     app.use(express.json());
@@ -44,15 +45,15 @@ db.open(function () {
 
     // development only
     if ('development' == app.get('env')) {
-        global.assetsCDN = 'http://localhost'
-        global.imgCDN = 'http://localhost'
-        global.hostDOMAIN = 'http://localhost'
+        global.assetsCDN = 'http://localhost:1280'
+        global.imgCDN = 'http://localhost:1280'
+        global.hostDOMAIN = 'http://localhost:1280'
     }
 
     if ('production' == app.get('env')) {
-        global.assetsCDN = 'http://localhost'
-        global.imgCDN = 'http://localhost'
-        global.hostDOMAIN = 'http://localhost'
+        global.assetsCDN = 'http://sjplus.wicp.net'
+        global.imgCDN = 'http://sjplus.wicp.net'
+        global.hostDOMAIN = 'http://sjplus.wicp.net'
     }
 
     app.use(function (req, res, next) {
