@@ -47,14 +47,14 @@ db.open(function () {
     process.env.NODE_ENV = 'development'
 
     // development only
-    if ('development' == app.get('env')) {
+    if ('development' == process.env.NODE_ENV) {
         app.use(express.errorHandler());
         global.assetsCDN = 'http://localhost:1280'
         global.imgCDN = 'http://localhost:1280'
         global.hostDOMAIN = 'http://localhost:1280'
     }
 
-    if ('production' == app.get('env')) {
+    if ('production' == process.env.NODE_ENV) {
         global.assetsCDN = 'http://sjplus.wicp.net'
         global.imgCDN = 'http://sjplus.wicp.net'
         global.hostDOMAIN = 'http://sjplus.wicp.net'
