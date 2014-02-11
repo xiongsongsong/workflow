@@ -35,7 +35,11 @@ define(function (require, exports, module) {
                     path['fill-excel-data'].data = $('#excel-data').val()
                     path['filter-excel-data'].data = transExcelData($('#excel-data').val())
                     var tpl = require('./filter-excel-data.tpl')
-                    $content.html(template.render(tpl, { data: path['filter-excel-data'].data }))
+                    if (path['filter-excel-data'].data) {
+                        $content.html(template.render(tpl, { data: path['filter-excel-data'].data }))
+                    } else {
+                        alert('数据解析失败')
+                    }
                 }
             }
         },
@@ -47,6 +51,8 @@ define(function (require, exports, module) {
                 if (!confirm('确认发布需求？')) {
                     return
                 }
+
+
                 path['filter-excel-data'].html = $content.html()
                 var $alreadyTh = $('th.J-fields');
                 var cell = (function () {
