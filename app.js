@@ -44,10 +44,11 @@ db.open(function () {
         })
     }));
 
-    app.use(express.errorHandler());
+    process.env.NODE_ENV = 'development'
 
     // development only
     if ('development' == app.get('env')) {
+        app.use(express.errorHandler());
         global.assetsCDN = 'http://localhost:1280'
         global.imgCDN = 'http://localhost:1280'
         global.hostDOMAIN = 'http://localhost:1280'
