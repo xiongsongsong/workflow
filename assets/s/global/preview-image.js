@@ -5,8 +5,9 @@
  * Created by songsong on 12/17/13.
  */
 
-$(function () {
+jQuery(function () {
 
+    var $ = jQuery
     $('<div id="preview-img" style="position:fixed;left:0;top:0;z-index:12;"></div><div id="preview-close" style="display:none;background:#aaa;position:fixed;cursor:pointer;right:0;top:0;line-height:50px;font-size:50px;z-index:13;color:#fff;padding:0 12px;background:#000;filter:alpha(opacity=40);opacity:.5;">&times</div><div id="preview-img-mask"' +
         ' style="display:none;position:fixed;left:0;top:0;bottom:0;right:0;z-index:11;background:#000;' +
         'filter:alpha(opacity=40);opacity:.5;"></div>').append($(document.body))
