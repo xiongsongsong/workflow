@@ -22,8 +22,6 @@ block content
                                     .wrapper 需求名称
                                 th(width="10%")
                                     .wrapper 需求方
-                                th(width="10%")
-                                    .wrapper 任务时长
                             - docs.forEach(function(item){
                               tr
                                     td
@@ -31,6 +29,4 @@ block content
                                             a(href='/task/detail/#{item._id}') #{item.task['需求名称']}
                                     td
                                         .wrapper=item.task['需求方']
-                                    td
-                                        .wrapper=item.task['任务时长']
                             - })

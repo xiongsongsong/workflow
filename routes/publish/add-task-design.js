@@ -75,22 +75,6 @@ app.post('/task/add-task', function (req, res) {
             }
         }
 
-        keys.forEach(function (key) {
-            if (key === '任务时长') {
-                if (taskValidator.任务时长(item[key]) === false) {
-                    serverInfo.taskError.push(key + '=' + item[key] + '，是非法值')
-                    return
-                }
-                item[key] = parseInt(item[key], 10)
-            } else {
-                //防止xss
-                var _value = xss(item[key])
-                var _key = xss(key)
-                delete item[key]
-                item[_key] = _value
-            }
-        })
-
         //只有“指派计件任务设计师”组，有权限更改此字段
         delete item['设计师']
 

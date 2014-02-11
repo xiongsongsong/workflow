@@ -12,8 +12,7 @@ var taskValidator = require('./../task-validator')
 //有权限修改字段名：所对应的组角色
 var white = {
     设计师: '指派计件任务设计师',//eg:只有‘指派计件任务设计师’的组，才能修改‘设计师’字段
-    备注: '添加计件需求',
-    任务时长: '修改任务时长'
+    备注: '添加计件需求'
 }
 
 app.post(/\/task\/modify\/([a-z0-9]{24})/, function (req, res) {
@@ -68,16 +67,6 @@ app.post(/\/task\/modify\/([a-z0-9]{24})/, function (req, res) {
                 name: xss(req.body.key),
                 modify_value: xss(xss(req.body.value))
             }
-        }
-
-        if (req.body.key === '任务时长') {
-            if (taskValidator.任务时长(req.body.value) === false) {
-                server.err.push('任务时长值不正确')
-                server.status = -5
-                res.json(server)
-                return
-            }
-            $set['task.任务时长'] = parseInt(req.body.value, 10)
         }
 
         $push.history.type = '修改字段'
