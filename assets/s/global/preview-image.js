@@ -14,10 +14,10 @@ define(function (require, exports, module) {
     var $preview = $('#preview-img')
 
     $(document).on('click', '.J-preview-file', function (ev) {
-        var $this = $(ev.currentTarget)
+        var $this = $(ev.target)
         if ($this.data('file-id') && /(?:jpg|gif|jpeg|png)$/gi.test($this.data('file-id'))) {
             ev.preventDefault()
-            $('<img src="' + ev.currentTarget.href + '?m=full-size" />').appendTo($preview)
+            $('<img src="' + ev.target.href + '?m=full-size" />').appendTo($preview)
             show()
         }
     })
