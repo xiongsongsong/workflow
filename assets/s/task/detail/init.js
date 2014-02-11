@@ -61,7 +61,7 @@ define(function () {
             alert(data.err.join(''))
             return
         }
-        $('.J-upload-file-submit-trigger').value = '上传完成，正在保存记录...'
+        $('.J-upload-file-submit-trigger').val('上传完成，正在保存记录...')
         $.ajax({
             url: '/task/add-task-ps-file/' + window.taskId,
             type: 'post',
@@ -73,7 +73,7 @@ define(function () {
                 size: data.size
             }
         }).done(function () {
-                $upload.value = '上传'
+                $upload.val('上传')
                 window.location.reload()
             }).error(function () {
                 alert('保存文件记录失败')
