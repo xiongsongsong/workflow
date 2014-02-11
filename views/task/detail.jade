@@ -60,7 +60,10 @@ block content
                         iframe(name='task-ps-file-iframe',width='0',height='0',style='position:absolute;left:-9999em;top:-9999em;')
                 -if(req.session.group.indexOf('指派计件任务设计师')>-1)
                     .J-push.push
-                        h2 指定设计师
+                        -if(task['设计师'])
+                            h2 转交给其他设计师
+                        -else
+                            h2 指定设计师
                         .btn-area.J-select-user
                         a.btn.btn-confirm.J-confirm-user 确认选择
                 //-if(req.session.group.indexOf('审核计件任务')>-1)
