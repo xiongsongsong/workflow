@@ -39,7 +39,7 @@ block content
                                                     -if(history.type==='修改字段')
                                                         | #{history.from_user}将#{history.name}指定为#{history.modify_plain_value?history.modify_plain_value:history.modify_value}
                                                     -if(history.type==='上传附件')
-                                                        | #{history.from_user}上传了附件<a href="/read/#{history.file_id}" data-file-id='#{history.file_id}'>#{history.file_name}</a>
+                                                        | #{history.from_user}上传了附件<a class="file" href="/read/#{history.file_id}" download="#{history.file_name}" data-file-id='#{history.file_id}'>#{history.file_name}</a>
                                                 -else
                                                     | 尚未处理
                                 - })

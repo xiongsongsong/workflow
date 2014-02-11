@@ -46,7 +46,7 @@ block content
                                         -if(item.type==='修改字段')
                                             |  #{item.from_user}将#{item.name}指定为#{item.modify_plain_value?item.modify_plain_value:item.modify_value}
                                         -if(item.type==='上传附件')
-                                            |  #{item.from_user}上传了附件<a href="/read/#{item.file_id}" data-file-id='#{item.file_id}'>#{item.file_name}</a>
+                                            |  #{item.from_user}上传了附件<a class="file" href="/read/#{item.file_id}" download="#{item.file_name}" data-file-id="#{item.file_id}">#{item.file_name}</a>
                                 -})
                         form(action="/save/task-ps-file",method='post',enctype="multipart/form-data",target='task-ps-file-iframe')
                             input(type='hidden',name='_csrf',value='#{token}')
