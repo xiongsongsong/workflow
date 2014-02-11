@@ -15,8 +15,7 @@ block content
     #main-container-wrapper
         #main-container-container
             #main-container-content
-                h2 名称：
-                    =task['需求名称']
+                h2=task['需求名称']
                     | <a href="javascript:window.history.back()" style="font-size:12px;margin:0 12px;color:red;">&lt;&lt;返回上一页</a>
                 ul.task-info
                     li(style='margin-bottom:12px;') 需求方：#{task['需求方']}
