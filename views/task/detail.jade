@@ -56,7 +56,7 @@ block content
                                     input#upload-file(type='file',name="file",value="",style='font-size:12px;')
                             p(style='margin-bottom:8px;') 小提示，如果您是设计师，在定稿前均请传送jpg或png格式图片，方便他人查看
                             p
-                                input.btn.btn-confirm(type='submit',value='上传')
+                                input.btn.J-upload-file-submit-trigger.btn-confirm(type='submit',value='上传')
                         iframe(name='task-ps-file-iframe',width='0',height='0',style='position:absolute;left:-9999em;top:-9999em;')
                 -if(req.session.group.indexOf('指派计件任务设计师')>-1)
                     .J-push.push

@@ -53,10 +53,15 @@ define(function () {
         initDesigner()
     }
 
+    var $upload = $('.J-upload-file-submit-trigger')
 
     window.taskFileUploadCallBack = function (data) {
         //将上传成功的文件，保存到task.history中
-        if (!data.file_id) return
+        if (!data.file_id) {
+            alert(data.err.join(''))
+            return
+        }
+        $('.J-upload-file-submit-trigger').value = '上传完成，正在保存记录...'
         $.ajax({
             url: '/task/add-task-ps-file/' + window.taskId,
             type: 'post',
@@ -67,13 +72,23 @@ define(function () {
                 file_name: data.file_name,
                 size: data.size
             }
-        }).done(function (data) {
-                console.log('成功传入文件' + data)
+        }).done(function () {
+                $upload.value = '上传'
                 window.location.reload()
             }).error(function () {
-                console.log('保存文件记录失败')
+                alert('保存文件记录失败')
             })
 
     }
+
+    $upload.on('click', function (ev) {
+        if ($upload.data('is-runing')) {
+            ev.preventDefault()
+            ev.stopPropagation()
+            return
+        }
+        $upload.data('is-runing', true)
+        $upload.val('正在上传，请稍后....')
+    })
 
 })
