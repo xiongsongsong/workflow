@@ -1,4 +1,5 @@
 block sidebar-avatar
     .avatar
         img(src="/avatar/#{req.session._id}_80x80")
-        h1 #{req.session.user}
+        h1 #{req.session.user} |
+            a(href='/login/login-out') 退出

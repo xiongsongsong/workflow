@@ -32,7 +32,7 @@ block content
                             .front
                 .task-record-wrapper
                     .task-record-content
-                        h2 需求变更记录
+                        h2 需求记录
                         - var date=new Date(ts)
                         ul.record
                             li #{date.getFullYear()}.#{timerZeros(date.getMonth()+1)}.#{timerZeros(date.getDate())}
@@ -54,11 +54,12 @@ block content
                             p.upload-file
                                 label.upload-file-trigger(for='upload-file') 选择文件（50Mb以内）
                                     input#upload-file(type='file',name="file",value="",style='font-size:12px;')
+                            p(style='margin-bottom:8px;') 小提示，如果您是设计师，在定稿前均请传送jpg或png格式图片，方便他人查看
                             p
                                 input.btn.btn-confirm(type='submit',value='上传')
                         iframe(name='task-ps-file-iframe',width='0',height='0',style='position:absolute;left:-9999em;top:-9999em;')
                 -if(task['设计师']===undefined)
                     .J-push.push
-                        h2 该任务分配给
+                        h2 等待分配设计师
                         .btn-area.J-select-user
                         a.btn.btn-confirm.J-confirm-user 确认选择

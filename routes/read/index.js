@@ -1,5 +1,6 @@
 var app = require('app')
 var db = require('db')
+var path = require('path')
 
 var map = {
     'full-size': '优化后的全尺寸',
@@ -13,11 +14,17 @@ app.get(/\/read\/(.+)/i, function (req, res) {
     res.header('Last-Modified', ' Tue, 10 Jan 2000 02:19:00 GMT')
 
     var url = req.params[0]
+    var isImage = ['jpg', 'jpeg', 'png', 'gif'].indexOf(path.extname(url).substring(1).toLowerCase()) > -1
+
+    if (!isImage) {
+        res.header('content-type', 'object/stream')
+    }
+
     if (req.headers['if-modified-since']) {
         res.status(304)
         res.end()
     } else {
-        if (map[req.query.m]) {
+        if (map[req.query.m] && isImage) {
             var fs = new db.mongodb.Collection(db.Client, 'fs.files')
             fs.findOne({
                 _id: new RegExp(url.substring(0, 24)),

@@ -34,7 +34,11 @@ define(function (require, exports, module) {
             __: sha3(pwd).toString(),
             _csrf: window._csrf_token_
         }, function (data) {
-            console.log('服务器返回的数据', data)
+            if (data.status > 0) {
+                window.location.href = '/task/own-task-list'
+            } else {
+                alert('帐号或密码错误')
+            }
         }, 'json')
     }
 

@@ -39,6 +39,8 @@ define(function () {
             }).done(function (data) {
                     if (data.status > 0) {
                         window.location.reload()
+                    } else {
+                        alert(data.err.join(''))
                     }
                 }
             ).error(function () {
