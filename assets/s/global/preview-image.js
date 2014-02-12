@@ -17,7 +17,7 @@ define(function (require, exports, module) {
         var $this = $(ev.target)
         if ($this.data('file-id') && /(?:jpg|gif|jpeg|png)$/gi.test($this.data('file-id'))) {
             ev.preventDefault()
-            $preview.html('<img src="' + ev.target.href + '?m=full-size" />')
+            $preview.html('<img src="' + ev.target.href + '" />')
             show()
         }
     })
