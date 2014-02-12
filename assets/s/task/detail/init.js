@@ -1,4 +1,8 @@
 define(function (require, exports, module) {
+
+
+    var $document = $(document)
+
     function initDesigner() {
         $.getJSON('/user/onsite/onsite-design-user', function (data) {
             var str = ''
@@ -8,8 +12,6 @@ define(function (require, exports, module) {
             }
             $('.J-select-user').html(str)
         })
-
-        var $document = $(document)
 
         $document.on('click', '.J-select-user-trigger', function (ev) {
             ev.preventDefault()
@@ -26,28 +28,43 @@ define(function (require, exports, module) {
                 alert('请选择设计师')
                 return
             }
-            $.ajax({
-                type: 'post',
-                url: '/task/modify/' + window.taskId,
-                dataType: 'json',
-                data: {
-                    _csrf: window._csrf_token_,
-                    key: '设计师',
-                    value: user_id,
-                    plain_value: $.trim(target.text())
-                }
-            }).done(function (data) {
-                    if (data.status > 0) {
-                        window.location.reload()
-                    } else {
-                        alert(data.err.join(''))
-                    }
-                }
-            ).error(function () {
-
-                })
+            modify({
+                key: '设计师',
+                value: user_id,
+                plain_value: $.trim(target.text())
+            })
         })
     }
+
+    function modify(data) {
+        data._csrf = window._csrf_token_
+        $.ajax({
+            type: 'post',
+            url: '/task/modify/' + window.taskId,
+            dataType: 'json',
+            data: data
+        }).done(function (data) {
+                if (data.status > 0) {
+                    window.location.reload()
+                } else {
+                    alert(data.err.join(''))
+                }
+            }
+        ).error(function () {
+
+            })
+    }
+
+    //删除或完成这个需求
+    $document.on('click', '.J-control-task-version', function (ev) {
+        var $this = $(ev.currentTarget)
+        var key = $this.data('key')
+        var value = $this.data('value')
+        modify({
+            key: key,
+            value: value
+        })
+    })
 
     if ($('.J-push').length > 0) {
         initDesigner()
