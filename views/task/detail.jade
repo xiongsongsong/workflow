@@ -45,7 +45,7 @@ block content
                                         | #{date.getFullYear()}.#{timerZeros(date.getMonth()+1)}.#{timerZeros(date.getDate())}
                                         | #{timerZeros(date.getHours())}:#{timerZeros(date.getMinutes())}:#{timerZeros(date.getSeconds())}
                                         -if(item.type==='修改字段')
-                                            | #{item.name}被设定为#{item.modify_plain_value?item.modify_plain_value:item.modify_value}
+                                            | &nbsp;#{item.name}被设定为#{item.modify_plain_value?item.modify_plain_value:item.modify_value}
                                         -if(item.type==='上传附件')
                                             | #{item.from_user}上传了附件<a class="J-preview-file file" href="/read/#{item.file_id}?m=full-size" download="#{item.file_name}" data-file-id="#{item.file_id}">
                                             -if(/(?:jpg|gif|jpeg|png)$/gi.test(item.file_id))
