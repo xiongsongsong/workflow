@@ -40,12 +40,14 @@ block content
                                 span.date-time
                                     | #{date.getFullYear()}.#{timerZeros(date.getMonth()+1)}.#{timerZeros(date.getDate())}
                                     | #{timerZeros(date.getHours())}:#{timerZeros(date.getMinutes())}:#{timerZeros(date.getSeconds())}
+                                | 完成需求提交
                             -if(Array.isArray(history))
                                 -history.forEach(function(item){
                                     -var date=new Date(item.ts)
                                     li
-                                        | #{date.getFullYear()}.#{timerZeros(date.getMonth()+1)}.#{timerZeros(date.getDate())}
-                                        | #{timerZeros(date.getHours())}:#{timerZeros(date.getMinutes())}:#{timerZeros(date.getSeconds())}
+                                        span.date-time
+                                            | #{date.getFullYear()}.#{timerZeros(date.getMonth()+1)}.#{timerZeros(date.getDate())}
+                                            | #{timerZeros(date.getHours())}:#{timerZeros(date.getMinutes())}:#{timerZeros(date.getSeconds())}
                                         -if(item.type==='修改字段')
                                             | #{item.name}被设定为#{item.modify_plain_value?item.modify_plain_value:item.modify_value}
                                         -if(item.type==='上传附件')
