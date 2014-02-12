@@ -36,8 +36,10 @@ block content
                         h2 需求记录
                         - var date=new Date(ts)
                         ul.record
-                            li #{date.getFullYear()}.#{timerZeros(date.getMonth()+1)}.#{timerZeros(date.getDate())}
-                                | #{timerZeros(date.getHours())}:#{timerZeros(date.getMinutes())}:#{timerZeros(date.getSeconds())} 完成需求提交
+                            li
+                                span.date-time
+                                    | #{date.getFullYear()}.#{timerZeros(date.getMonth()+1)}.#{timerZeros(date.getDate())}
+                                    | #{timerZeros(date.getHours())}:#{timerZeros(date.getMinutes())}:#{timerZeros(date.getSeconds())}
                             -if(Array.isArray(history))
                                 -history.forEach(function(item){
                                     -var date=new Date(item.ts)
