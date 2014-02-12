@@ -54,16 +54,17 @@ block content
                                             | </a>
                                             | &nbsp | <a target="_blank" class="file" href="/read/#{item.file_id}" download="#{item.file_name}">下载</a>
                                 -})
-                        form(action="/save/task-ps-file",method='post',enctype="multipart/form-data",target='task-ps-file-iframe')
-                            input(type='hidden',name='_csrf',value='#{token}')
-                            input(type='hidden',name='callBackName',value='taskFileUploadCallBack')
-                            p.upload-file
-                                label.upload-file-trigger(for='upload-file') 选择文件（50Mb以内）
-                                    input#upload-file(type='file',name="file",value="",style='font-size:12px;')
-                            p(style='margin-bottom:8px;') 小提示，如果您是设计师，在定稿前均请传送jpg或png格式图片，方便他人查看
-                            p
-                                input.btn.J-upload-file-submit-trigger.btn-confirm(type='submit',value='上传')
-                        iframe(name='task-ps-file-iframe',width='0',height='0',style='position:absolute;left:-9999em;top:-9999em;')
+                        -if(task['状态']!=='完成' && task['状态']!=='删除')
+                            form(action="/save/task-ps-file",method='post',enctype="multipart/form-data",target='task-ps-file-iframe')
+                                input(type='hidden',name='_csrf',value='#{token}')
+                                input(type='hidden',name='callBackName',value='taskFileUploadCallBack')
+                                p.upload-file
+                                    label.upload-file-trigger(for='upload-file') 选择文件（50Mb以内）
+                                        input#upload-file(type='file',name="file",value="",style='font-size:12px;')
+                                p(style='margin-bottom:8px;') 小提示，如果您是设计师，在定稿前均请传送jpg或png格式图片，方便他人查看
+                                p
+                                    input.btn.J-upload-file-submit-trigger.btn-confirm(type='submit',value='上传')
+                            iframe(name='task-ps-file-iframe',width='0',height='0',style='position:absolute;left:-9999em;top:-9999em;')
                 -if(req.session.group.indexOf('指派计件任务设计师')>-1 && task['状态']!=='删除' && task['状态']!=='完成')
                     .J-push.push
                         -if(task['设计师'])
