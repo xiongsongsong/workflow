@@ -39,7 +39,7 @@ block content
                                                 -if(Array.isArray(item.history))
                                                     -var history=item.history[item.history.length-1]
                                                     -if(history.type==='修改字段')
-                                                        | #{history.from_user}将#{history.name}指定为#{history.modify_plain_value?history.modify_plain_value:history.modify_value}
+                                                        | #{history.name}被设定为#{history.modify_plain_value?history.modify_plain_value:history.modify_value}
                                                     -if(history.type==='上传附件')
                                                         | #{history.from_user}上传了附件<a class="J-preview-file file" href="/read/#{history.file_id}" download="#{history.file_name}" data-file-id='#{history.file_id}'>
                                                         -if(/(?:jpg|gif|jpeg|png)$/gi.test(history.file_id))
