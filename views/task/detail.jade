@@ -87,5 +87,5 @@ block content
                         input.btn.btn-danger.J-control-task-version(data-key="状态",data-value="完成",type='button',value='完成这个需求')
                 -if(req.session.group.indexOf('完成或删除计件需求')>-1 && task['状态']!=='完成' && task['状态']!=='删除')
                     .control.delete-control-wrapper
-                        p 如果需求作废，请删除这个需求。
+                        p 如果此需求作废了，请删除这个需求。删除前，请务必和需求方沟通确认。
                         input.btn.btn-danger.J-control-task-version(data-key='状态',data-value="删除",type='button',value='删除这个需求')

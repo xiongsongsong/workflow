@@ -60,6 +60,9 @@ define(function (require, exports, module) {
         var $this = $(ev.currentTarget)
         var key = $this.data('key')
         var value = $this.data('value')
+        if (!confirm('确实要将 ' + key + ' 设定为 ' + value + '吗？')) {
+            return
+        }
         modify({
             key: key,
             value: value
