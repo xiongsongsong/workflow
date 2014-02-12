@@ -12,6 +12,7 @@ var xss = require('xss')
 var taskValidator = require('./../task-validator')
 
 var requireField = ['需求名称', '任务类型', '需求方']
+var blockField = ['状态', '设计师']
 
 app.post('/task/add-task', function (req, res) {
 
@@ -60,6 +61,14 @@ app.post('/task/add-task', function (req, res) {
         }
 
         var _i = '第' + (index + 1) + '行'
+
+        //检查黑名单
+        for (var j = 0; j < blockField.length; j++) {
+            if (keys.indexOf(blockField[j]) > -1) {
+                serverInfo.taskError.push(_i + blockField[ j ] + '不允许手工上传')
+                return
+            }
+        }
 
         // 四个必须存在的字段 '需求名称', '任务类型', '需求方'
         if (keys.indexOf('需求名称') < 0 || keys.indexOf('任务类型') < 0 && keys.indexOf('需求方') < 0) {
