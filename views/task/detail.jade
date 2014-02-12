@@ -49,10 +49,9 @@ block content
                                         -if(item.type==='上传附件')
                                             | #{item.from_user}上传了附件<a class="J-preview-file file" href="/read/#{item.file_id}?m=full-size" download="#{item.file_name}" data-file-id="#{item.file_id}">
                                             -if(/(?:jpg|gif|jpeg|png)$/gi.test(item.file_id))
-                                                | 预览：
-                                                | #{item.file_name}
-                                                | </a>
-                                                | &nbsp | <a target="_blank" class="file" href="/read/#{item.file_id}?m=origin" download="#{item.file_name}">下载</a>
+                                            | 预览：
+                                            | #{item.file_name}</a>
+                                            | &nbsp | <a target="_blank" class="file" href="/read/#{item.file_id}?m=origin" download="#{item.file_name}">下载</a>
                                 -})
                         -if(task['状态']!=='完成' && task['状态']!=='删除')
                             form(action="/save/task-ps-file",method='post',enctype="multipart/form-data",target='task-ps-file-iframe')
