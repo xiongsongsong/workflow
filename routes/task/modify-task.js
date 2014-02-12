@@ -17,8 +17,16 @@ var white = {
 
 app.post(/\/task\/modify\/([a-z0-9]{24})/, function (req, res) {
 
+    var server = {err: []}
+
+    if (!helper.isLogin(req)) {
+        server.err.push('需要重新登陆')
+        server.status = -1
+        res.json(server)
+        return
+    }
+
     helper.getGroup(req, function (group) {
-        var server = {err: []}
         if (Array.isArray(group) === false) {
             server.err.push('无法获取组信息')
             server.status = -1

@@ -7,7 +7,11 @@ var db = require('db')
 var helper = require('helper')
 
 app.get('/task/own-task-list', function (req, res) {
-    var task = new db.Collection(db.Client, 'task')
+
+    if (!helper.isLogin(req)) {
+        res.redirect('/')
+        return
+    }
 
     helper.getGroup(req, function (group) {
 
@@ -45,6 +49,7 @@ app.get('/task/own-task-list', function (req, res) {
             return
         }
 
+        var task = new db.Collection(db.Client, 'task')
 
         task.find(filter, {}).sort([
                 ['_id', -1]
