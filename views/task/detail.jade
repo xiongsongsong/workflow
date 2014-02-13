@@ -9,10 +9,11 @@ block content
     #sidebar
         include /sidebar-avatar-menu
         ul.menu
+            -if(req.session.group.indexOf('添加计件需求')>-1)
+                li
+                    a(href="/task/add-task") 添加新需求
             li
-                a(href="/task/add-task") 添加新需求
-            li
-                a(href="/task/own-task-list") 我相关的需求
+                a.current(href="/task/own-task-list") 我相关的需求
     #main-container-wrapper
         #main-container-container
             #main-container-content
