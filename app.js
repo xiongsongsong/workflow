@@ -44,7 +44,7 @@ db.open(function () {
         })
     }));
 
-    process.env.NODE_ENV = 'development'
+    process.env.NODE_ENV = 'production'
 
     // development only
     if ('development' == process.env.NODE_ENV) {
