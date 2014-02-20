@@ -44,8 +44,10 @@ app.get('/task/own-task-list', function (req, res) {
             filter = {ts: {$gte: Date.now() - 3600 * 1000 * 24 * 30}}
         }
 
+
         if (Object.keys(filter).length < 1) {
-            res.end('Deny Access')
+            res.header('content-type', 'text/plain;charset=utf-8')
+            res.end('您缺少权限，请联系元茗处理')
             return
         }
 

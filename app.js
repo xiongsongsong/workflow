@@ -19,7 +19,7 @@ db.open(function () {
     app.set('views', path.join(__dirname, 'views'));
     app.locals.basedir = './views'
     app.set('view engine', 'jade');
-    app.set('view cache', true)
+    app.set('view cache', false)
     app.use(express.favicon());
     app.use(express.logger('dev'));
     app.use(express.json());

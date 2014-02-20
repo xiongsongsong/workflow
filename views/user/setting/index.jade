@@ -1,0 +1,91 @@
+extends /layout
+block css
+    link(rel='stylesheet',href="/s/task/detail.css")
+    style.
+        #main-container-container h2{
+            font-size:16px
+        }
+
+        table.form{
+            width:100%;
+            font-size:12px
+        }
+
+        table.form td,
+        table.form th{
+            padding:5px 6px;
+        }
+
+        .text-field{
+            padding: 2px 7px;
+            border: solid 1px #ccc;
+            min-width:220px;
+        }
+
+        table.form th{
+            text-align:right;
+        }
+block js
+    script.
+        seajs.use('/s/user/personal/index')
+block content
+    #sidebar
+        include /sidebar-avatar-menu
+        include /sidebar-menu
+    #main-container-wrapper
+        #main-container-container(style="display:none;")
+                h2 更新密码
+                form#admin-user-update-password(action="/admin/user/update/password",method="post")
+                    table.form
+                        tr
+                            th(width="15%") 原密码
+                            td
+                                input.text-field.text-field-normal(type="password",name="origin-pwd")
+                        tr
+                            th 新密码
+                            td
+                                input.text-field.text-field-normal(type="password",name="new-pwd")
+                        tr
+                            th 确认密码
+                            td
+                                input.text-field.text-field-normal(type="password",name="confirm-pwd")
+                        tr
+                            th
+                            td
+                                input.btn.btn-large(type="submit",value="更新")
+                h2 更新其他信息
+                form#admin-user-information(action="/admin/user/update/information",method="post")
+                    input(type="hidden",name="_csrf",value="#{token}")
+                    table.form
+                        tr
+                            th(width="15%") 邮箱
+                            td
+                                -if(typeof privacy_information!=='undefined' && privacy_information.email)
+                                    input.text-field.text-field-normal(type="text",name="email",value="#{privacy_information.email.value}")
+                                -else
+                                    input.text-field.text-field-normal(type="text",name="email",value="")
+                        tr
+                            th 手机
+                            td
+                                -if(typeof privacy_information!=='undefined' && privacy_information.phone)
+                                    input.text-field.text-field-normal(type="text",name="phone",value="#{privacy_information.phone.value}")
+                                -else
+                                    input.text-field.text-field-normal(type="text",name="phone",value="")
+                        tr
+                            th 座机
+                            td
+                                -if(typeof privacy_information!=='undefined' && privacy_information.mobile)
+                                    input.text-field.text-field-normal(type="text",name="mobile",value="#{privacy_information.mobile.value}")
+                                -else
+                                    input.text-field.text-field-normal(type="text",name="mobile",value="")
+                        tr
+                            th 微博或个人网址
+                            td
+                                -if(typeof privacy_information!=='undefined' && privacy_information.zone_url)
+                                    input.text-field.text-field-normal(type="text",name="zone_url",value="#{privacy_information.zone_url.value}")
+                                -else
+                                    input.text-field.text-field-normal(type="text",name="zone_url",value="")
+                        tr
+                            th
+                            td
+                                input.btn.btn-large(type="submit",value="更新")

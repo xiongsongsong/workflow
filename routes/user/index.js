@@ -11,3 +11,5 @@ app.get('/user/onsite/onsite-design-user', function (req, res) {
         res.jsonp(docs)
     })
 })
+
+require('./setting')
