@@ -35,13 +35,13 @@ app.get('/task/own-task-list', function (req, res) {
         }
 
         if (group.indexOf('添加计件需求') > -1) {
-            filter = {from_id: req.session._id, ts: {$gte: Date.now() - 3600 * 1000 * 24 * 730}}
+            filter = {from_id: req.session._id, ts: {$gte: Date.now() - 3600 * 1000 * 24 * 365}}
         }
 
         //注意：需求方是没有权限指定计件任务的设计师的
         //需求方只能查看自己相关的需求
         if (group.indexOf('指派计件任务设计师') > -1) {
-            filter = {ts: {$gte: Date.now() - 3600 * 1000 * 24 * 730}}
+            filter = {ts: {$gte: Date.now() - 3600 * 1000 * 24 * 365}}
         }
 
 
